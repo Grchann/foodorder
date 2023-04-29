@@ -61,7 +61,7 @@ export const _HomeScreen: React.FC<HomeProps> = (props) => {
                     <SearchBar didTouch={() => {
                         navigate('SearchPage')
                     }}  onTextChange={() => {}} />
-                    <ButtonWithIcon onTap={() => {}} icon={require('../images/hambar.png')} width={50} height={40} />
+                    <ButtonWithIcon onTap={() => {}} icon={require('../images/settings_icon.png')} width={30} height={30} />
                 </View>
             </View>
             
