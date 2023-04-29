@@ -1,0 +1,78 @@
+[
+  {
+    offerType: 'generic',
+    vendors: [],
+    images: [ 'offer_Percent.jpg' ],
+    title: 'Giảm giá 50%',
+    description: 'Giảm giá 50% cho đơn hàng, chưa tính ship. Khuyến mãi chỉ áp dụng với đơn hàng trên 100.000VNĐ',
+    minValue: 100,
+    offerAmount: 0,
+    offerPercentage: 50,
+    startValidity: 2023-04-30T17:00:00.000Z,
+    endValidity: 2023-05-31T17:00:00.000Z,
+    promoCode: 'HAPPY50',
+    promoType: 'All',
+    bank: [],
+    bin: [],
+    pinCode: ''
+  },
+  {
+    offerType: 'generic',
+    vendors: [],
+    images: [ 'offer_Percent.jpg' ],
+    title: 'Giảm giá 30%',
+    minValue: 100,
+    offerAmount: 0,
+    offerPercentage: 50,
+    startValidity: 2023-04-30T17:00:00.000Z,
+    endValidity: 2023-05-31T17:00:00.000Z,
+    promoCode: 'HAPPY30',
+    promoType: 'All',
+    bank: [],
+    bin: [],
+    pinCode: ''
+  }
+]
+PS D:\fileCode\JS\Food\backend\create_json> npm run build
+
+> build
+> node ./src/index.js
+
+[
+  {
+    _id: 'b431204b-edc0-4981-8d11-0b167ad3850e',
+    offerType: 'generic',
+    vendors: [],
+    images: [ 'offer_Percent.jpg' ],
+    title: 'Giảm giá 50%',
+    description: 'Giảm giá 50% cho đơn hàng, chưa tính ship. Khuyến mãi chỉ áp dụng với đơn hàng trên 100.000VNĐ',
+    minValue: 100,
+    offerAmount: 0,
+    offerPercentage: 50,
+    startValidity: 2023-04-30T17:00:00.000Z,
+    endValidity: 2023-05-31T17:00:00.000Z,
+    promoCode: 'HAPPY50',
+    promoType: 'All',
+    bank: [],
+    bin: [],
+    pinCode: ''
+  },
+  {
+    _id: 'aeb9f803-976c-47e0-9042-3011cc5b6ea3',
+    offerType: 'generic',
+    vendors: [],
+    images: [ 'offer_Percent.jpg' ],
+    title: 'Giảm giá 30%',
+    description: 'Giảm giá 30% cho đơn hàng, chưa tính ship. Khuyến mãi chỉ áp dụng với đơn hàng trên 100.000VNĐ',
+    minValue: 100,
+    offerAmount: 0,
+    offerPercentage: 50,
+    startValidity: 2023-04-30T17:00:00.000Z,
+    endValidity: 2023-05-31T17:00:00.000Z,
+    promoCode: 'HAPPY30',
+    promoType: 'All',
+    bank: [],
+    bin: [],
+    pinCode: ''
+  }
+]

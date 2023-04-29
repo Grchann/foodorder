@@ -1,0 +1,22 @@
+[
+  {
+    _id: 'c53ed580-3d48-4586-ab09-204db0bf3147',
+    title: 'Chay',
+    icon: 'category_Chay.jpg'
+  },
+  {
+    _id: '8c986270-87f7-4a45-b1b1-c74fa19dccec',
+    title: 'Bánh truyền thống',
+    icon: 'category_BanhTruyenThong.jpg'
+  },
+  {
+    _id: 'f3ff762a-f021-4f65-bdc7-bd3bc404f455',
+    title: 'Hải sản',
+    icon: 'category_HaiSan.jpg'
+  },
+  {
+    _id: 'c373fa1a-d9bc-4442-b478-271b1b2f8a24',
+    title: 'Món nước',
+    icon: 'category_MonNuoc.jpg'
+  }
+]
