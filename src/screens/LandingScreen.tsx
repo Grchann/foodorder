@@ -14,6 +14,9 @@ import { readJSON } from '../../backend/utils'
 import { initAsyncStorage } from '../../backend'
 import { PATH_FOOD_JSON } from '../../backend/const'
 
+
+import BcryptReactNative from "bcrypt-react-native"
+
 const screenWidth = Dimensions.get('screen').width
 
 
@@ -113,12 +116,12 @@ const _LandingScreen: React.FC<LandingProps> = (props) => {
     }
 
     useEffect(() => {
-        // fs.readFile('../../backend/json/restaurants.json').then(data=>console.log(data)).catch(err=>console.log(err))
-        // readJSON('./backend/json/restaurants.js').then(data=>console.log(data)).catch(err=>console.log(err))
         AsyncStorage.clear()
-        initAsyncStorage().then(
-            
+        initAsyncStorage().then(async ()=>{
+            // console.log(await BcryptReactNative.getSalt(10))
+        }
         )
+        
         checkExistingLocation()
     }, [])
 

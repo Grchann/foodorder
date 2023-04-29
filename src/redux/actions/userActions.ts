@@ -3,6 +3,7 @@ import { Dispatch } from 'react'
 import { BASE_URL, MAP_API_KEY } from '../../utils'
 import AsyncStorage from '@react-native-community/async-storage'
 import { FoodModel, OfferModel, OrderModel, UserModel, Address, PickedLocationResult } from '../models'
+import { onBECreateOrder, onBEGetOrders, onLogin, onSignUp } from '../../../backend/controllers'
 
 export interface UpdateLocationAction{
     readonly type: 'ON_UPDATE_LOCATION',
@@ -145,14 +146,15 @@ export const onUserLogin = (email: string, password: string) => {
     return async ( dispatch: Dispatch<UserAction>) => {
 
         try {
-             const response = await axios.post<UserModel>(`${BASE_URL}user/login`, {
-                email,
-                password
-            })
+            //  const response = await axios.post<UserModel>(`${BASE_URL}user/login`, {
+            //     email,
+            //     password
+            // })
+            const response = await onLogin(email, password)
 
             // console.log(response)
 
-            if(!response){
+            if(!response.body.data){
                 dispatch({
                     type: 'ON_USER_ERROR',
                     payload: 'Login Error'
@@ -160,10 +162,11 @@ export const onUserLogin = (email: string, password: string) => {
             }else{
                 dispatch({
                     type: 'ON_USER_LOGIN',
-                    payload: response.data
+                    payload: response.body.data
                 })
             }
         } catch (error) {
+            console.log('catch: ', error)
             dispatch({
                 type: 'ON_USER_ERROR',
                 payload: error
@@ -201,15 +204,17 @@ export const onUserSignup = (email: string, phone: string ,password: string) => 
     return async ( dispatch: Dispatch<UserAction>) => {
 
         try {
-             const response = await axios.post<UserModel>(`${BASE_URL}user/create-account`, {
-                email,
-                phone,
-                password
-            })
+            //  const response = await axios.post<UserModel>(`${BASE_URL}user/create-account`, {
+            //     email,
+            //     phone,
+            //     password
+            // })
+
+            const response = await onSignUp(email, password, phone)
 
             // console.log(response)
 
-            if(!response){
+            if(!response.body.data){
                 dispatch({
                     type: 'ON_USER_ERROR',
                     payload: 'Login Error'
@@ -217,7 +222,10 @@ export const onUserSignup = (email: string, phone: string ,password: string) => 
             }else{
                 dispatch({
                     type: 'ON_USER_LOGIN',
-                    payload: response.data
+                    payload: {
+                        ...response.body.data,
+                        token: undefined
+                    }
                 })
             }
         } catch (error) {
@@ -302,30 +310,55 @@ export const onOTPRequest = (user: UserModel) => {
 }
 
 
-export const onCreateOrder = (cartItems: [FoodModel], user: UserModel) => {
+export const onCreateOrder = (cartItems: [FoodModel], user: UserModel, offer: OfferModel) => {
 
-    let cart = new Array();
-
-    cartItems.map(item=>{
-        cart.push({
-            _id: item._id,
-            unit: item.unit
-        })
+    const items = cartItems.map(item=>{
+        return {
+            food: {
+                _id: item._id,
+                unit: item.unit,
+                requestInfo: ''
+            }
+        }
     });
+    // console.log(items)
+
+    const order = {
+        items: cartItems.map(item=>{
+            return {
+                food: {
+                    _id: item._id,
+                    unit: item.unit,
+                    requestInfo: ''
+                }
+            }
+        }),
+        totalAmount: cartItems.reduce((total, currentItem)=>total + currentItem.price * currentItem.unit, 0),
+        paidThrough: 'Tiền mặt',
+        offer: {} as OfferModel
+    }
+
+    if (offer._id!==undefined){
+        order.offer._id = offer._id
+    }
+
+    // console.log(order)
 
     //transaction ID
     return async ( dispatch: Dispatch<UserAction>) => {
 
         try {
-            axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`
+            // axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`
 
-            const response = await axios.post<OrderModel>(`${BASE_URL}user/create-order` , {
-                cart
-            })
+            // const response = await axios.post<OrderModel>(`${BASE_URL}user/create-order` , {
+            //     cart
+            // })
 
-            // console.log(response)
+            const response = await onBECreateOrder(user._id, order)
 
-            if(!response){
+            console.log(response)
+
+            if(!response.body.data){
                 dispatch({
                     type: 'ON_USER_ERROR',
                     payload: 'User Vertification Error'
@@ -333,11 +366,11 @@ export const onCreateOrder = (cartItems: [FoodModel], user: UserModel) => {
             }else{
                 dispatch({
                     type: 'ON_CREATE_ORDER',
-                    payload: response.data
+                    payload: response.body.data
                 })
             }
         } catch (error) {
-            // console.log(error);
+            console.log(error);
             dispatch({
                 type: 'ON_USER_ERROR',
                 payload: error
@@ -351,13 +384,14 @@ export const onGetOrder = (user: UserModel) => {
     return async ( dispatch: Dispatch<UserAction>) => {
 
         try {
-            axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`
+            // axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`
 
-            const response = await axios.get<[OrderModel]>(`${BASE_URL}user/order` )
+            // const response = await axios.get<[OrderModel]>(`${BASE_URL}user/order` )
+            const response = await onBEGetOrders(user._id)
 
-            // console.log(response)
+            console.log(response)
 
-            if(!response){
+            if(!response.body.data){
                 dispatch({
                     type: 'ON_USER_ERROR',
                     payload: 'User Vertification Error'
@@ -365,7 +399,7 @@ export const onGetOrder = (user: UserModel) => {
             }else{
                 dispatch({
                     type: 'ON_VIEW_ORDER',
-                    payload: response.data
+                    payload: response.body.data as [OrderModel]
                 })
             }
         } catch (error) {

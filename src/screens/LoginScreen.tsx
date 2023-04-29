@@ -63,6 +63,7 @@ const _LoginScreen: React.FC<LoginProps> = ({ onUserLogin, onUserSignup, userRed
            onUserSignup(email, phone, password);
         }else{
             onUserLogin(email, password)
+            console.log('logingin')
         }
 
     }

@@ -38,9 +38,9 @@ const unTransformOrder = (order: any)=>{
     }
 }
 
-export const onCreateOrder = async (user: DBUser, order: any)=>{
+export const onBECreateOrder = async (idUser: string, order: any)=>{
     const dbUsers = (await readJSON(PATH_USER_JSON)) as [DBUser];
-    const indexUser = dbUsers.findIndex(dbUser=>dbUser._id === user._id);
+    const indexUser = dbUsers.findIndex(dbUser=>dbUser._id === idUser);
     if (indexUser>-1){
         
         const dbOrders = await readJSON(PATH_ORDER_JSON);
@@ -77,10 +77,10 @@ export const onCreateOrder = async (user: DBUser, order: any)=>{
 
 }
 
-export const onGetOrders = async (user: DBUser) =>{
+export const onBEGetOrders = async (idUser: string) =>{
     const dbUsers = (await readJSON(PATH_USER_JSON)) as [DBUser];
     const dbOrders = (await readJSON(PATH_ORDER_JSON)) as [any];
-    const indexUser = dbUsers.findIndex(dbUser=>dbUser._id === user._id);
+    const indexUser = dbUsers.findIndex(dbUser=>dbUser._id === idUser);
     if (indexUser>-1){
         const userOrders = await dbUsers[indexUser].orders.map((order)=>{
             return dbOrders.filter(dbOrder=>dbOrder._id  === order)[0];

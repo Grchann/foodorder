@@ -4,6 +4,8 @@ import { Dispatch } from 'react'
 import { BASE_URL } from '../../utils'
 import { Category, FoodAvailability, FoodModel, OfferModel, Restaurant } from '../models'
 import { onGetAvailability } from '../../../backend/controllers'
+import { readJSON } from '../../../backend/utils'
+import { onGetOffers } from '../../../backend/controllers/offer'
 
 const POST_CODE = 400012
 const [LAT, LNG] = [15.975285677159741, 108.2523549954628]
@@ -88,9 +90,6 @@ export const onAvailability = (postCode: string) => {
                     unit: 0
                 }
             }) as [any]
-            console.log(foods[0].images)
-            console.log(restaurants[0].images)
-            console.log(categories[0].icon)
 
             // replaceFoodAvailabilityURL(response.data);
 
@@ -174,12 +173,12 @@ export const onGetOffer = (postCode: string) => {
 
         try {
 
-            const response = await axios.get<[OfferModel]>(`${BASE_URL}food/offers/${POST_CODE}`)
+            // const response = await axios.get<[OfferModel]>(`${BASE_URL}food/offers/${POST_CODE}`)
 
-            // console.log(response)
-            replaceFoodsURL(response.data)
-
-            if(!response){
+            // // console.log(response)
+            // replaceFoodsURL(response.data)
+            const response = await onGetOffers()
+            if(!response.body.data){
                 dispatch({
                     type: 'ON_SHOPPING_ERROR',
                     payload: 'Offer Availability error'
@@ -188,7 +187,7 @@ export const onGetOffer = (postCode: string) => {
                 // save our location in local storage
                 dispatch({
                     type: 'ON_OFFER_SEARCH',
-                    payload: response.data
+                    payload: response.body.data
                 })
             }
 

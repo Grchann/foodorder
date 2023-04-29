@@ -61,7 +61,7 @@ export interface UserModel{
     lastName: string;
     email: string;
     phone: string;
-    token: string,
+    token: string | undefined,
     verified: boolean
 }
  

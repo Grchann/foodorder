@@ -1,13 +1,14 @@
 import { createJSON, readJSON } from "../utils"
 import { PATH_USER_JSON } from "../const";
-import bcrypt from "bcrypt-react-native"
+import BcryptReactNative from "bcrypt-react-native"
 import { DBUser, generateUser } from "../models/user";
 
 const SALT = '$2b$15$TBo3gzMnDmXyU6MjqimRn.'
 const OTP = '494949'
 
 const createUser = async (users: [DBUser], email: string, password: string, phone: string)=>{
-    const hashPassword = await bcrypt.hash(password, SALT)
+    // const hashPassword = await BcryptReactNative.hash(SALT, password)
+    const hashPassword = password
     let user = generateUser(users) as DBUser;
     user.email = email;
     user.password = hashPassword;
@@ -23,7 +24,10 @@ export const onLogin = async (email: string, password: string)=>{
     const users = (await readJSON(PATH_USER_JSON)) as [DBUser];
     if (checkExistingEmail(users, email)){
         const user = users.filter(user=>user.email === email)[0]
-        if (user.password === await bcrypt.hash(password, SALT)){
+        // BcryptReactNative.hash(SALT, password).then(data=>console.log(data)).catch((err)=>console.log('err', err))
+        // if (user.password === await BcryptReactNative.hash(SALT, password)){
+        if (user.password === password){
+            console.log('correct password')
             return {
                 status: 200,
                 body:{

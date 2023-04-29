@@ -98,7 +98,7 @@ const _CartScreen: React.FC<CartScreenProps> = (props) => {
 
     // After the payment operation call place order
     const onTapPlaceOrder = ()=>{
-        props.onCreateOrder(Cart, user);
+        props.onCreateOrder(Cart, user, appliedOffer);
         popupRef.current?.close();
         props.onApplyOffer(appliedOffer, true);
     }
