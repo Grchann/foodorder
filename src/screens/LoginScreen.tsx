@@ -40,6 +40,7 @@ const _LoginScreen: React.FC<LoginProps> = ({ onUserLogin, onUserSignup, userRed
         if (user._id !== undefined){
             if (!user.verified){
                 // OTP Page
+                onEnableOtpRequest()
             }else{
                 // Back Page
                 goBack();
@@ -113,6 +114,7 @@ const _LoginScreen: React.FC<LoginProps> = ({ onUserLogin, onUserSignup, userRed
     const onTapRequestNewOTP = ()=>{
         setCanRequestOtp(false);
         onOTPRequest(user);
+        onEnableOtpRequest();
     }
 
 
