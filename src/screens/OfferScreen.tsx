@@ -80,8 +80,8 @@ const _OfferScreen: React.FC<OfferScreenProps> = (props) => {
 
     return (<View style={styles.container}>
         <View style={styles.navigation}> 
-            <View style={{ display: 'flex', height: 60, justifyContent: 'center', flexDirection: 'row', 
-                alignItems: 'center', marginLeft: 20, marginRight: 20, paddingRight: 20}}>
+            <View style={{ display: 'flex', height: 60, justifyContent: 'space-between', flexDirection: 'row', 
+                alignItems: 'center', marginLeft: 20, marginRight: 20}}>
                 {/* <ButtonWithIcon 
                     icon={require('../images/back_arrow.png')}
                     onTap={()=> goBack()}
@@ -112,7 +112,7 @@ const _OfferScreen: React.FC<OfferScreenProps> = (props) => {
 
 const styles = StyleSheet.create({
 container: { flex: 1, backgroundColor: '#F2F2F2'},
-navigation: { flex: 1,  marginTop: 43, },
+navigation: { flex: 1,  marginTop: 43 },
 body: { flex: 10, justifyContent: 'center', alignItems: 'center' },
 footer: { flex: 1, backgroundColor: 'cyan' }
 })

@@ -231,7 +231,7 @@ const _CartScreen: React.FC<CartScreenProps> = (props) => {
             <View style={styles.container}>
                 <View style={styles.navigation}> 
                     <View style={{ display: 'flex', height: 60, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20,}}>
-                        <Text style={{ fontSize: 18, fontWeight: '600'}}> My Cart</Text>
+                        <Text style={{ fontSize: 22, fontWeight: '600'}}> My Cart</Text>
                         {user.token !== undefined && <TouchableOpacity
                             style={{ alignItems: "center" }}
                             onPress={() => {
@@ -283,7 +283,7 @@ const _CartScreen: React.FC<CartScreenProps> = (props) => {
             <View style={styles.container}>
                 <View style={styles.navigation}> 
                     <View style={{ display: 'flex', height: 60, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20,}}>
-                        <Text style={{ fontSize: 18, fontWeight: '600'}}> My Cart</Text>
+                        <Text style={{ fontSize: 22, fontWeight: '600'}}> My Cart</Text>
                         {user.token !== undefined && <TouchableOpacity
                             style={{ alignItems: "center" }}
                             onPress={() => {
@@ -310,7 +310,7 @@ const _CartScreen: React.FC<CartScreenProps> = (props) => {
 
 const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: '#F2F2F2'},
-    navigation: { flex: 1,  marginTop: 43, },
+    navigation: { flex: 1, marginTop: 43},
     body: { flex: 9.5, justifyContent: 'center', alignItems: 'center' },
     footer: { flex: 1.5, justifyContent: 'center', padding: 10 },
     amountDetails: {

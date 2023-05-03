@@ -51,13 +51,13 @@ export const _HomeScreen: React.FC<HomeProps> = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.navigation}> 
-                <View style={{ marginTop: 50, flex: 4, backgroundColor: 'white', paddingLeft: 30, paddingRight: 20, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row'}}>
+                <View style={{ marginTop: 50, flex: 4, backgroundColor: 'white', paddingLeft: 5, paddingRight: 20, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row'}}>
                     <Image source={require('../images/delivery_icon.png')} style={{width: 32, height: 32}} />
-                    <Text style={{width: 280, marginRight: 5}}>{location.displayAddress} </Text> 
+                    <Text style={{width: 320, marginRight: 5}}>{location.displayAddress} </Text> 
                     <ButtonWithIcon onTap={() => {navigate('LocationPage')}} icon={require('../images/edit_icon.png')} width={24} height={24} />
 
                 </View>
-                <View style={{ display: 'flex', height: 60, justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', marginLeft: 4}}>
+                <View style={{ display: 'flex', height: 60, justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', marginLeft: -10}}>
                     <SearchBar didTouch={() => {
                         navigate('SearchPage')
                     }}  onTextChange={() => {}} />
