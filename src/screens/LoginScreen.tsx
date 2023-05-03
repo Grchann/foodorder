@@ -11,10 +11,11 @@ interface LoginProps{
     onUserSignup: Function,
     userReducer: UserState,
     onVerifyOTP: Function,
-    onOTPRequest: Function
+    onOTPRequest: Function,
+    navigation: { getParam: Function, goBack: Function}
  }
 
-const _LoginScreen: React.FC<LoginProps> = ({ onUserLogin, onUserSignup, userReducer, onVerifyOTP, onOTPRequest }) => {
+const _LoginScreen: React.FC<LoginProps> = ({ onUserLogin, onUserSignup, userReducer, onVerifyOTP, onOTPRequest, navigation }) => {
 
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
@@ -31,21 +32,35 @@ const _LoginScreen: React.FC<LoginProps> = ({ onUserLogin, onUserSignup, userRed
 
     const {user} = userReducer
 
-    const {navigate} = useNavigation()
+    // const {navigate} = useNavigation()
+    const {goBack} = navigation;
 
     useEffect(()=>{
-
-        if (user.token !== undefined){
-            
-            if (user.verified === true){
-                //navigate to Cart Page
-                navigate('CartPage')
+        setVerified(user.verified)
+        if (user._id !== undefined){
+            if (!user.verified){
+                // OTP Page
             }else{
-                setVerified(user.verified)
-                //check for start timer
-                onEnableOtpRequest()
+                // Back Page
+                goBack();
             }
+        }else{
+
         }
+
+        // if (user.token !== undefined){
+            
+        //     if (user.verified === true){
+        //         //navigate to Cart Page
+        //         navigate('CartPage')
+        //     }else{
+        //         setVerified(user.verified)
+        //         //check for start timer
+        //         onEnableOtpRequest()
+        //     }
+        // }else{
+        //     setVerified(user.verified)
+        // }
 
         return ()=>{
             clearInterval(countDown);
@@ -102,7 +117,7 @@ const _LoginScreen: React.FC<LoginProps> = ({ onUserLogin, onUserSignup, userRed
 
 
 
-    if (!verified){
+    if (user._id !== undefined && !verified){
         //show OTP Page
         return (
             <View style={styles.container}>

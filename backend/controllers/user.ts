@@ -67,7 +67,12 @@ export const onSignUp = async (email: string, password: string, phone: string)=>
         return {
             status: 200,
             body:{
-                data: user
+                
+                data: {
+                    ...user,
+                    token: 'TEMP'
+                }
+
             }
         }
     }else{

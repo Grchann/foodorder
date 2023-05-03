@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, Image, Dimensions, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { ApplicationState, ShoppingState, onUserLogout, UserState } from '../redux'
@@ -19,6 +19,14 @@ const _AccountScreen: React.FC<AccountScreenProps> = (props) => {
     const { navigate } = useNavigation()
  
     const { user } = props.userReducer;
+
+    useEffect(()=>{
+        if(user.token === undefined){
+
+            navigate('LoginPage')
+        
+        }
+    }, [user])
 
     const optionCard = (title: string, action: Function)=>{
         return <TouchableOpacity 
@@ -71,35 +79,37 @@ const _AccountScreen: React.FC<AccountScreenProps> = (props) => {
         }
     ]
 
-    if(user.token !== undefined){
-
-        return (
-            <View style={styles.container}>
-                <View style={styles.navigation}> 
-                    <View style={{ display: 'flex', height: 60, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20,}}>
-                        <Image source={require('../images/avatar.png')} style={{  width: 150, height: 150, marginRight: 20}} />
-                        <View>
-                            <Text style={{fontSize: 22, fontWeight: '600'}}>{user.firstName || 'Guest'}</Text>
-                            <Text style={{fontSize: 18}}>{user.email}</Text>
-                        </View>
+    return (
+        <View style={styles.container}>
+            <View style={styles.navigation}> 
+                <View style={{ display: 'flex', height: 60, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20,}}>
+                    <Image source={require('../images/avatar.png')} style={{  width: 150, height: 150, marginRight: 20}} />
+                    <View>
+                        <Text style={{fontSize: 22, fontWeight: '600'}}>{user.firstName || 'Guest'}</Text>
+                        <Text style={{fontSize: 18}}>{user.email}</Text>
                     </View>
                 </View>
-
-                <View style={styles.body}>
-                    <ScrollView>
-                        {options.map(({title, action})=>{
-                            return optionCard(title, action)
-                        })}
-                    </ScrollView>
-                </View>
             </View>
-        )
 
-    }else{
+            <View style={styles.body}>
+                <ScrollView>
+                    {options.map(({title, action})=>{
+                        return optionCard(title, action)
+                    })}
+                </ScrollView>
+            </View>
+        </View>
+    )
 
-        return <LoginScreen/>
+
+    // if(user.token !== undefined){
+
+        
+    // }else{
+
+    //     navigate('LoginPage')
          
-    } 
+    // } 
     
  
 }
