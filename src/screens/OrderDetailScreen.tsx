@@ -26,6 +26,8 @@ const _OrderDetailScreen: React.FC<OrderDetailScreenProps> = (props) => {
 
     const order = getParam('order') as OrderModel
 
+    let orderPaidThrough = (order.paidThrough.toLowerCase() === 'cash') ? "Tiền mặt" : "Chưa xác định"
+
     const onTapCancelOrder = ()=>{
         Alert.alert(
             "Do you want to cancel this order?",
@@ -46,7 +48,7 @@ const _OrderDetailScreen: React.FC<OrderDetailScreenProps> = (props) => {
             <Text style={styles.orderInfo}> 
                 Order Date: {moment(order.orderDate).format('Do MMM YY, h:mm a')} 
             </Text>
-            <Text style={styles.orderInfo}> Paid Through: {order.paidThrough} </Text>
+            <Text style={styles.orderInfo}> Paid Through: {orderPaidThrough} </Text>
             <Text style={styles.orderInfo}> Order Amount: {order.totalAmount} </Text>
             <Text style={styles.orderInfo}> Status: {order.orderStatus} </Text>
         </View>

@@ -104,15 +104,15 @@ export const onBEGetOrders = async (idUser: string) =>{
     }
 }
 
-export const onCancelOrder = async (user: DBUser, order: any)=>{
+export const onBECancelOrder = async (idUser: string, order: any)=>{
     const dbUsers = (await readJSON(PATH_USER_JSON)) as [DBUser];
     const dbOrders = (await readJSON(PATH_ORDER_JSON)) as [any];
-    const indexUser = dbUsers.findIndex(dbUser=>dbUser._id === user._id);
+    const indexUser = dbUsers.findIndex(dbUser=>dbUser._id === idUser);
     if (indexUser>-1){
         if (dbUsers[indexUser].orders.findIndex(idOrder=>idOrder === order._id)>-1){
             const indexOrder = dbOrders.findIndex(order=>order._id === order._id);
             // console.log(indexOrder)
-            dbOrders[indexOrder].orderStatus = 'Hủy'
+            dbOrders[indexOrder].orderStatus = 'cancelled'
         }
         createJSON(PATH_ORDER_JSON, dbOrders)
         const userOrders = await dbUsers[indexUser].orders.map((order)=>{

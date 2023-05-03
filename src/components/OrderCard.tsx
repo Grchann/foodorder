@@ -22,6 +22,9 @@ const OrderCard: React.FC<OrderCardProps> = ({ item, onTap }) => {
         }else if (status === 'cancelled'){
             statusMessage = 'Cancelled';
             statusIcon = require('../images/warning-icon.png')
+        }else if (status === 'waiting'){
+            statusMessage = "Đẫ xác nhận";
+            statusIcon = require('../images/order_process.png');
         }
         
         return <View style={{display: 'flex', flex: 3, padding: 5, alignItems: 'center', justifyContent: 'space-around'}}>

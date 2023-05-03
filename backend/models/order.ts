@@ -19,9 +19,9 @@ export const generateOrder = (orders: [DBOrder])=>{
         items: [],
         totalAmount: 0,
         orderDate: new Date(),
-        paidThrough: 'Tiền mặt',
+        paidThrough: 'cash',
         paymentResponse: '',
-        orderStatus: 'Đợi phản hồi',
+        orderStatus: 'waiting',
         offer: null
     }
 }

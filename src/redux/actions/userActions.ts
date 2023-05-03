@@ -3,7 +3,7 @@ import { Dispatch } from 'react'
 import { BASE_URL, MAP_API_KEY } from '../../utils'
 import AsyncStorage from '@react-native-community/async-storage'
 import { FoodModel, OfferModel, OrderModel, UserModel, Address, PickedLocationResult } from '../models'
-import { onBECreateOrder, onBEGetOrders, onLogin, onSignUp } from '../../../backend/controllers'
+import { onBECancelOrder, onBECreateOrder, onBEGetOrders, onLogin, onSignUp } from '../../../backend/controllers'
 
 export interface UpdateLocationAction{
     readonly type: 'ON_UPDATE_LOCATION',
@@ -420,11 +420,13 @@ export const onCancelOrder = (order: OrderModel, user: UserModel) => {
         try {
             axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`
 
-            const response = await axios.delete<[OrderModel]>(`${BASE_URL}user/order/${order._id}` )
+            // const response = await axios.delete<[OrderModel]>(`${BASE_URL}user/order/${order._id}` )
+
+            const response = await onBECancelOrder(user._id, order)
 
             // console.log(response)
 
-            if(!response){
+            if(!response.body.data){
                 dispatch({
                     type: 'ON_USER_ERROR',
                     payload: 'User Vertification Error'
@@ -432,7 +434,7 @@ export const onCancelOrder = (order: OrderModel, user: UserModel) => {
             }else{
                 dispatch({
                     type: 'ON_CANCEL_ORDER',
-                    payload: response.data
+                    payload: response.body.data as [OrderModel]
                 })
             }
         } catch (error) {
