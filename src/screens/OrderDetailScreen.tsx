@@ -26,7 +26,9 @@ const _OrderDetailScreen: React.FC<OrderDetailScreenProps> = (props) => {
 
     const order = getParam('order') as OrderModel
 
-    let orderPaidThrough = (order.paidThrough.toLowerCase() === 'cash') ? "Tiền mặt" : "Chưa xác định"
+    let orderPaidThrough = (order.paidThrough.toLowerCase() === 'cash') ? "Tiền mặt".toUpperCase() : "Chưa xác định".toUpperCase()
+
+    let orderStatus = (order.orderStatus.toLowerCase() === 'waiting') ? "Đã xác nhận".toUpperCase() : "Hủy".toUpperCase()
 
     const onTapCancelOrder = ()=>{
         Alert.alert(
@@ -50,7 +52,7 @@ const _OrderDetailScreen: React.FC<OrderDetailScreenProps> = (props) => {
             </Text>
             <Text style={styles.orderInfo}> Paid Through: {orderPaidThrough} </Text>
             <Text style={styles.orderInfo}> Order Amount: {order.totalAmount} </Text>
-            <Text style={styles.orderInfo}> Status: {order.orderStatus} </Text>
+            <Text style={styles.orderInfo}> Status: {orderStatus} </Text>
         </View>
     }
 

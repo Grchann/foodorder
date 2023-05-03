@@ -77,17 +77,23 @@ const UserReducer = (state: UserState = initialState, action: UserAction) => {
                 user: {} as UserModel
             }
 
+        case 'ON_CLEAR_CART':
+            return {
+                ...state,
+                Cart: []
+            }
+
         case 'ON_CREATE_ORDER':
             if (!Array.isArray(state.orders)){
                 return {
                     ...state,
-                    Cart: [],
+                    // Cart: [],
                     orders: [action.payload]
                 }
             }else{
                 return{
                     ...state,
-                    Cart: [],
+                    // Cart: [],
                     orders: [...state.orders, action.payload]
                 }
             }
@@ -108,6 +114,12 @@ const UserReducer = (state: UserState = initialState, action: UserAction) => {
             return{
                 ...state,
                 appliedOffer: action.payload
+            }
+
+        case 'ON_REMOVE_OFFER':
+            return{
+                ...state,
+                appliedOffer: {} as OfferModel
             }
 
         case 'ON_ADD_OFFER':

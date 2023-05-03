@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createRef} from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, Image, Dimensions, Alert } from 'react-native'
 import { connect } from 'react-redux'
-import { ApplicationState, FoodModel, ShoppingState, onUpdateCart, onCreateOrder, onApplyOffer, UserState } from '../redux'
+import { ApplicationState, FoodModel, ShoppingState, onUpdateCart, onCreateOrder, onApplyOffer, onClearCart, UserState } from '../redux'
 
 import { ButtonWithIcon, FoodCard, FoodCardInfo, SearchBar, ButtonWithTitle } from '../components'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
@@ -15,7 +15,8 @@ interface CartScreenProps{
     shoppingReducer: ShoppingState,
     onUpdateCart: Function,
     onCreateOrder: Function,
-    onApplyOffer: Function
+    onApplyOffer: Function,
+    onClearCart: Function
  }
 
 
@@ -101,6 +102,9 @@ const _CartScreen: React.FC<CartScreenProps> = (props) => {
         props.onCreateOrder(Cart, user, appliedOffer);
         popupRef.current?.close();
         props.onApplyOffer(appliedOffer, true);
+        setTimeout(() => {
+            props.onClearCart();
+        }, 500);
     }
 
     const footerContent = ()=>{
@@ -129,23 +133,23 @@ const _CartScreen: React.FC<CartScreenProps> = (props) => {
                 
                 <View style={styles.paymentInfo}>
                     <Text style={{flex: 1, fontSize: 14}}>Total</Text>
-                    <Text style={{fontSize: 16}}>{totalAmount.toFixed(0)}</Text>
+                    <Text style={{fontSize: 16}}>{totalAmount.toFixed(3)} VNĐ</Text>
                 </View>
 
                 <View style={styles.paymentInfo}>
                     <Text style={{flex: 1, fontSize: 14}}>Tax & Delivery Charge</Text>
-                    <Text style={{fontSize: 16}}>{totalTax.toFixed(0)}</Text>
+                    <Text style={{fontSize: 16}}>{totalTax.toFixed(3)} VNĐ</Text>
                 </View>
 
                 {appliedOffer._id !== undefined &&
                 <View style={styles.paymentInfo}>
                     <Text style={{flex: 1, fontSize: 14}}>Discount (applied {appliedOffer.offerPercentage}% Offer)</Text>
-                    <Text style={{fontSize: 16}}>{discount.toFixed(0)}</Text>
+                    <Text style={{fontSize: 16}}>{discount.toFixed(3)} VNĐ</Text>
                 </View>}
                 
                 <View style={styles.paymentInfo}>
                     <Text style={{flex: 1, fontSize: 14}}>Net Payable</Text>
-                    <Text style={{fontSize: 16}}>{payableAmount.toFixed(0)}</Text>
+                    <Text style={{fontSize: 16}}>{payableAmount.toFixed(3)} VNĐ</Text>
                 </View>
             </View>
         </View>
@@ -181,7 +185,7 @@ const _CartScreen: React.FC<CartScreenProps> = (props) => {
                 >
                     <View style={styles.paymentView}>
                         <Text style={{fontSize: 20}}>Payable Amount</Text>
-                        <Text style={{fontSize: 20, fontWeight: '600'}}>{payableAmount.toFixed(0)} VNĐ</Text>
+                        <Text style={{fontSize: 20, fontWeight: '600'}}>{payableAmount.toFixed(3)} VNĐ VNĐ</Text>
                     </View>
 
                     <View style={{display: 'flex', height: 100, padding: 20, flexDirection: 'row'}}>
@@ -262,7 +266,7 @@ const _CartScreen: React.FC<CartScreenProps> = (props) => {
                     <View style={styles.amountView}>
                         <Text style={{ fontSize: 18 }}> Total</Text>
                         <Text style={{ fontSize: 18, fontWeight: "600" }}>
-                            {payableAmount}
+                            {payableAmount.toFixed(3)} VNĐ
                         </Text>
                     </View>
                     <ButtonWithTitle 
@@ -397,6 +401,6 @@ const mapStateToProps = (state: ApplicationState) => ({
 })
 
 
-const CartScreen = connect(mapStateToProps, {onUpdateCart, onCreateOrder, onApplyOffer})(_CartScreen)
+const CartScreen = connect(mapStateToProps, {onUpdateCart, onCreateOrder, onApplyOffer, onClearCart})(_CartScreen)
 
  export { CartScreen }

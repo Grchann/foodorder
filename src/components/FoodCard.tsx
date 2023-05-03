@@ -29,7 +29,7 @@ const FoodCard: React.FC<FoodCardProps> = ({ item, onTap, onUpdateCart, unit }) 
                     <Text>{item.category}</Text>
                 </View>
                 <View style={{ display: 'flex', flex: 5, padding: 10, justifyContent:'space-around', alignItems: 'center'}}>
-                    <Text style={{ fontSize: 18, fontWeight: '600', color: '#7C7C7C'}}>₹{item.price}</Text>
+                    <Text style={{ fontSize: 18, fontWeight: '600', color: '#7C7C7C'}}>{item.price.toFixed(3)} VNĐ</Text>
                     {unit !== undefined ? 
                         <Text style={{fontSize: 18, fontWeight: '700'}}> Qty: {unit}</Text> :
                         <ButtonAddRemove 

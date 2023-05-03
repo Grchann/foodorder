@@ -31,6 +31,11 @@ export interface UserLogoutAction{
     readonly type: 'ON_USER_LOGOUT',
     payload: string
 }
+
+export interface ClearCartAction{
+    readonly type: 'ON_CLEAR_CART',
+    payload: string
+}
 export interface CreateOrderAction{
     readonly type: 'ON_CREATE_ORDER',
     payload: OrderModel
@@ -58,6 +63,7 @@ export type UserAction =
     UpdateCartAction | 
     UserLoginAction | 
     UserLogoutAction |
+    ClearCartAction |
     CreateOrderAction | 
     ViewOrderAction |
     AddRemoveOfferAction |
@@ -309,37 +315,42 @@ export const onOTPRequest = (user: UserModel) => {
 
 }
 
+export const onClearCart = ()=>{
+    return async ( dispatch: Dispatch<UserAction>) => {
+        dispatch({
+            type: 'ON_CLEAR_CART',
+            payload: 'Clear Cart Successfully'
+        })
+    }
+
+}
+
 
 export const onCreateOrder = (cartItems: [FoodModel], user: UserModel, offer: OfferModel) => {
 
-    const items = cartItems.map(item=>{
-        return {
-            food: {
-                _id: item._id,
-                unit: item.unit,
-                requestInfo: ''
-            }
-        }
-    });
-    // console.log(items)
+    let totalAmount = cartItems.reduce((total, currentItem)=>total + currentItem.price * currentItem.unit, 0);
+    // after offer
+
+    if (offer._id!==undefined){
+        totalAmount = totalAmount * (100 - offer.offerPercentage)
+    }else{
+        offer = {} as OfferModel
+    }
+
 
     const order = {
         items: cartItems.map(item=>{
             return {
                 food: {
                     _id: item._id,
-                    unit: item.unit,
-                    requestInfo: ''
-                }
+                },
+                unit: item.unit,
+                requestInfo: ''
             }
         }),
-        totalAmount: cartItems.reduce((total, currentItem)=>total + currentItem.price * currentItem.unit, 0),
-        paidThrough: 'Tiền mặt',
-        offer: {} as OfferModel
-    }
-
-    if (offer._id!==undefined){
-        order.offer._id = offer._id
+        totalAmount: totalAmount,
+        paidThrough: 'cash',
+        offer: offer
     }
 
     // console.log(order)
