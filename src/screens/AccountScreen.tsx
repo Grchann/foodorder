@@ -93,6 +93,7 @@ const _AccountScreen: React.FC<AccountScreenProps> = (props) => {
 
             <View style={styles.body}>
                 <ScrollView>
+                    {(user._id!== undefined && !user.verified) ? optionCard('Xác nhận OTP', ()=>{navigate('LoginPage')}) : <></>}
                     {options.map(({title, action})=>{
                         return optionCard(title, action)
                     })}
