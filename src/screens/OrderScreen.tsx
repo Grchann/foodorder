@@ -43,8 +43,8 @@ const _OrderScreen: React.FC<OrderScreenProps> = (props) => {
                         <ButtonWithIcon 
                             icon={require('../images/back_arrow.png')}
                             onTap={()=> goBack()}
-                            width={32}
-                            height={38} />
+                            width={30}
+                            height={30} />
                         <Text style={{ fontSize: 22, fontWeight: '600', marginLeft: 30}}>My Orders</Text>
                         
                     </View>
@@ -84,8 +84,8 @@ const _OrderScreen: React.FC<OrderScreenProps> = (props) => {
                         <ButtonWithIcon 
                             icon={require('../images/back_arrow.png')}
                             onTap={()=> goBack()}
-                            width={32}
-                            height={38} />
+                            width={30}
+                            height={30} />
                         <Text style={{ fontSize: 22, fontWeight: '600', marginLeft: 30}}>My Orders</Text>
                     </View>
                 </View>
