@@ -42,9 +42,9 @@ const _OfferScreen: React.FC<OfferScreenProps> = (props) => {
 
         if (orderAmount >= item.minValue){
             props.onApplyOffer(item, false)
-            showAlert('Offer Applied', `Offer Applied with discount of ${item.offerPercentage}%`)
+            showAlert('Ưu đãi đã được áp dụng', `Ưu đãi được áp dụng giảm giá ${item.offerPercentage}%`)
         }else{
-            showAlert('This Offer is not Applicable', `This offer is only applicable with minimum order amount ${item.minValue}`)
+            showAlert('Ưu đãi này không được áp dụng', `Ưu đãi này chỉ áp dụng với số lượng đặt hàng tối thiểu ${item.minValue.toFixed(3)} VNĐ`)
         }
     }
 

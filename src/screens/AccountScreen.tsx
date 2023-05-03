@@ -40,31 +40,31 @@ const _AccountScreen: React.FC<AccountScreenProps> = (props) => {
                 
             }}>
             <Text style={{flex: 1, fontSize: 18, color: '#525252'}}>{title}</Text>
-            <Image source={require('../images/arrow_icon.png')} style={{width: 40, height: 40}}/>
+            <Image source={require('../images/arrow_icon.png')} style={{width: 30, height: 30}}/>
         </TouchableOpacity>
     }
 
     const options = [
         {
-            title: 'Edit Profile',
+            title: 'Chỉnh sửa hồ sơ',
             action: ()=>{
                 
             }
         },
         {
-            title: 'View Order',
+            title: 'Xem đơn hàng',
             action: ()=>{
                 navigate('AccountOrderPage')
             }
         },
         {
-            title: 'Contact Support',
+            title: 'Liên hệ hỗ trợ',
             action: ()=>{
 
             }
         },
         {
-            title: 'Logout',
+            title: 'Đăng xuất',
             action: ()=>{
                 props.onUserLogout();
             }
@@ -77,9 +77,9 @@ const _AccountScreen: React.FC<AccountScreenProps> = (props) => {
             <View style={styles.container}>
                 <View style={styles.navigation}> 
                     <View style={{ display: 'flex', height: 60, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20,}}>
-                        <Image source={require('../images/avatar.png')} style={{  width: 150, height: 150, marginRight: 20}} />
+                        <Image source={require('../images/avatar.png')} style={{  width: 90, height: 90, marginRight: 20}} />
                         <View>
-                            <Text style={{fontSize: 22, fontWeight: '600'}}>{user.firstName || 'Guest'}</Text>
+                            <Text style={{fontSize: 22, fontWeight: '600'}}>{user.firstName || 'Tôi'}</Text>
                             <Text style={{fontSize: 18}}>{user.email}</Text>
                         </View>
                     </View>

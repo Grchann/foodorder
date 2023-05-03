@@ -34,7 +34,7 @@ const _SearchScreen: React.FC<SearchScreenProps> = (props) => {
     return (<View style={styles.container}>
         <View style={styles.navigation}> 
             <View style={{ display: 'flex', height: 60, justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', marginLeft: 4}}>
-                <ButtonWithIcon icon={require('../images/back_arrow.png')} onTap={() => navigate("HomePage")} width={40} height={50} />
+                <ButtonWithIcon icon={require('../images/back_arrow.png')} onTap={() => navigate("HomePage")} width={30} height={30} />
                 <SearchBar onTextChange={setKeyword}  onEndEditing={() => setIsEditing(false)} didTouch={() => setIsEditing(true)}/>
             </View>
         </View>

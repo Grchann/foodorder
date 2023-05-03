@@ -24,7 +24,7 @@ return (<View style={styles.container}>
                 <Text style={{ fontSize: 14, color: '#616161'}}>{item.description}</Text>
             </View>
             <View style={{ display: 'flex', flex: 4, padding: 10, justifyContent:'space-around', alignItems: 'center'}}>
-                <Text style={{ fontSize: 18, fontWeight: '600', color: '#7C7C7C'}}>{item.price.toFixed(3)} VNĐ</Text>
+                <Text style={{ fontSize: 14, fontWeight: '600', color: '#7C7C7C'}}>{item.price.toFixed(3)} VNĐ</Text>
                 <ButtonAddRemove 
                 onAdd={() => {
                     let unit = isNaN(item.unit) ? 0 : item.unit;

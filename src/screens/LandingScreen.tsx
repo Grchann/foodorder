@@ -36,7 +36,7 @@ const _LandingScreen: React.FC<LandingProps> = (props) => {
     const [errorMsg, setErrorMsg] = useState("")
     const [address, setAddress] = useState<Location.Address>()
     
-    const [displayAddress, setDisplayAddress] = useState("Waiting for Current Location")
+    const [displayAddress, setDisplayAddress] = useState("Đang tìm kiếm")
 
     const showAlert = (title: string, msg: string)=>{
         Alert.alert(
@@ -131,9 +131,9 @@ const _LandingScreen: React.FC<LandingProps> = (props) => {
             <View style={styles.navigation} /> 
                 
             <View style={styles.body}>
-                <Image source={require('../images/delivery_icon.png')} style={styles.deliveryIcon} />
+                <Image source={require('../images/delivery-truck.png')} style={styles.deliveryIcon} />
                 <View style={styles.addressContainer}>
-                    <Text style={styles.addressTitle}>Your Delivery Address</Text>
+                    <Text style={styles.addressTitle}>Địa chỉ giao hàng của bạn</Text>
                 </View>
                 <Text style={styles.addressText}> {displayAddress}</Text>
             </View>

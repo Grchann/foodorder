@@ -111,8 +111,8 @@ const _LoginScreen: React.FC<LoginProps> = ({ onUserLogin, onUserSignup, userRed
                     <Image source={require('../images/verify_otp.png')}
                         style={{width: 120, height:120, margin: 20}}
                     />
-                    <Text style={{fontSize: 22, fontWeight: '500', margin: 10}}>Verification</Text>
-                    <Text style={{fontSize: 16, padding: 10, marginBottom: 20, color: '#716F6F'}}>Enter your OTP sent to your mobile number</Text>
+                    <Text style={{fontSize: 22, fontWeight: '500', margin: 10}}>Xác minh</Text>
+                    <Text style={{fontSize: 16, padding: 10, marginBottom: 20, color: '#716F6F'}}>Nhập OTP được gửi đến điện thoại bạn</Text>
                     <TextField isOTP={true} placeholder='OTP' onTextChange={setOtp}/>
 
                     <ButtonWithTitle title='Verify OTP' onTap={onTapVerify} width={340} height={50}/>
