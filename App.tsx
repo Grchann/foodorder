@@ -21,6 +21,7 @@ import { OrderDetailScreen } from './src/screens/OrderDetailScreen';
 import { AccountScreen } from './src/screens/AccountScreen';
 import { OfferScreen } from './src/screens/OfferScreen';
 import { LocationScreen } from './src/screens/LocationScreen';
+import { CategoryDetailScreen } from './src/screens/CategoryDetailScreen';
 
 
 const switchNavigator = createSwitchNavigator({
@@ -47,7 +48,8 @@ const switchNavigator = createSwitchNavigator({
           SearchPage: SearchScreen,
           RestaurantPage: RestaurantScreen,
           FoodDetailPage: FoodDetailScreen,
-          LocationPage: LocationScreen
+          LocationPage: LocationScreen,
+          CategoryDetailPage: CategoryDetailScreen
         },{
           defaultNavigationOptions: {
             headerShown: false

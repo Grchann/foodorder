@@ -6,7 +6,7 @@
   },
   {
     _id: '8c986270-87f7-4a45-b1b1-c74fa19dccec',
-    title: 'Bánh truyền thống',
+    title: 'Bánh Việt Nam',
     icon: 'category_BanhTruyenThong.jpg'
   },
   {

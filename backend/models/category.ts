@@ -20,7 +20,7 @@ const toCategories = [
     },
 
     {
-        title: 'Bánh truyền thống',
+        title: 'Bánh Việt Nam',
         icon: 'category_BanhTruyenThong.jpg'
     },
 

@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import { ButtonWithIcon, CategoryCard, SearchBar, RestaurantCard, FoodCard } from '../components'
 
 
-import { onAvailability, onSearchFoods ,UserState, ApplicationState, ShoppingState, Restaurant, FoodModel } from '../redux'
+import { onAvailability, onSearchFoods ,UserState, ApplicationState, ShoppingState, Restaurant, FoodModel, Category } from '../redux'
  
 interface HomeProps{
     userReducer: UserState,
@@ -37,6 +37,10 @@ export const _HomeScreen: React.FC<HomeProps> = (props) => {
         }, 1000 )
 
     }, [, location])
+
+    const onTapCategory = (item: Category) => {
+        navigate('CategoryDetailPage', { category: item })
+    }
 
     const onTapRestaurant = (item: Restaurant) => {
         navigate('RestaurantPage', { restaurant: item})
@@ -72,7 +76,7 @@ export const _HomeScreen: React.FC<HomeProps> = (props) => {
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         data={categories}
-                        renderItem ={({ item }) =>  <CategoryCard item={item} onTap={() => { alert('Category tapped') }} /> } 
+                        renderItem ={({ item }) =>  <CategoryCard item={item} onTap={onTapCategory} /> } 
                         keyExtractor={(item) => `${item._id}`}
                     />
                     <View>
