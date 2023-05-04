@@ -39,7 +39,7 @@ const OfferCard: React.FC<OfferCardProps> = ({ item, onTapApply, onTapRemove, is
                     <TouchableOpacity 
                         style={styles.applyPromo}
                         onPress={()=>onTapApply(item)}>
-                        <Text style={{fontSize: 16, fontWeight: '600', color: '#FFF'}}>Apply </Text>
+                        <Text style={{fontSize: 16, fontWeight: '600', color: '#FFF'}}> Apply </Text>
                         <Text style={{fontSize: 13, fontWeight: '600', color: '#FFF'}}>{item.promoCode}</Text>
                     </TouchableOpacity>
                     }
@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
         margin: 10,
         borderRadius: 20,
         backgroundColor: '#EFCA5F',
-        height: 270,
-        justifyContent: 'flex-start',
+        height: 300,
+        justifyContent: 'space-between',
         borderWidth: 1,
         borderColor: '#E5E5E5',
         flexDirection: 'column'

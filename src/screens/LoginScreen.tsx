@@ -1,15 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  Image,
-} from "react-native";
+import { StyleSheet, View, Text, TextInput, Image } from "react-native";
 import { TextField } from "../components";
-import { ButtonWithTitle } from "../components/ButtonWithTitle";
 import { connect } from "react-redux";
 import {
   ApplicationState,
@@ -19,7 +11,6 @@ import {
   onVerifyOTP,
   onOTPRequest,
 } from "../redux";
-import { useNavigation } from "../utils";
 import { LinearGradient } from "expo-linear-gradient";
 
 interface LoginProps {
@@ -28,6 +19,7 @@ interface LoginProps {
   userReducer: UserState;
   onVerifyOTP: Function;
   onOTPRequest: Function;
+  navigation: { getParam: Function; goBack: Function };
 }
 
 const _LoginScreen: React.FC<LoginProps> = ({
@@ -36,6 +28,7 @@ const _LoginScreen: React.FC<LoginProps> = ({
   userReducer,
   onVerifyOTP,
   onOTPRequest,
+  navigation,
 }) => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -46,7 +39,7 @@ const _LoginScreen: React.FC<LoginProps> = ({
   const [otp, setOtp] = useState("");
   const [verified, setVerified] = useState(true);
   const [requestOtpTitle, setRequestOtpTitle] = useState(
-    "Request a New OTP in"
+    "Mã OTP còn hiệu lực trong"
   );
   const [canRequestOtp, setCanRequestOtp] = useState(false);
 
@@ -54,18 +47,20 @@ const _LoginScreen: React.FC<LoginProps> = ({
 
   const { user } = userReducer;
 
-  const { navigate } = useNavigation();
+  // const {navigate} = useNavigation()
+  const { goBack } = navigation;
 
   useEffect(() => {
-    if (user.token !== undefined) {
-      if (user.verified === true) {
-        //navigate to Cart Page
-        navigate("CartPage");
-      } else {
-        setVerified(user.verified);
-        //check for start timer
+    setVerified(user.verified);
+    if (user._id !== undefined) {
+      if (!user.verified) {
+        // OTP Page
         onEnableOtpRequest();
+      } else {
+        // Back Page
+        goBack();
       }
+    } else {
     }
 
     return () => {
@@ -89,7 +84,7 @@ const _LoginScreen: React.FC<LoginProps> = ({
 
   const onEnableOtpRequest = () => {
     const otpDate = new Date();
-    otpDate.setTime(new Date().getTime() + 2 * 60 * 1000);
+    otpDate.setTime(new Date().getTime() + 0.1 * 60 * 1000);
     const otpTime = otpDate.getTime();
 
     countDown = setInterval(() => {
@@ -100,10 +95,10 @@ const _LoginScreen: React.FC<LoginProps> = ({
       let minutes = Math.floor((totalTime % (1000 * 60 * 60)) / (1000 * 60));
       let seconds = Math.floor((totalTime % (1000 * 60)) / 1000);
 
-      setRequestOtpTitle(`Request a New OTP in ${minutes}:${seconds}`);
+      setRequestOtpTitle(`Mã OTP còn hiệu lực trong ${minutes}:${seconds}`);
 
       if (minutes < 1 && seconds < 1) {
-        setRequestOtpTitle("Request a New OTP");
+        setRequestOtpTitle("Bạn chưa nhận được mã OTP?");
         setCanRequestOtp(true);
         clearInterval(countDown);
       }
@@ -117,48 +112,90 @@ const _LoginScreen: React.FC<LoginProps> = ({
   const onTapRequestNewOTP = () => {
     setCanRequestOtp(false);
     onOTPRequest(user);
+    onEnableOtpRequest();
   };
 
-  if (!verified) {
+  if (user._id !== undefined && !verified) {
     //show OTP Page
     return (
-      <View style={styles.container}>
-        <View style={styles.body}>
-          <Image
-            source={require("../images/verify_otp.png")}
-            style={{ width: 120, height: 120, margin: 20 }}
-          />
-          <Text style={{ fontSize: 22, fontWeight: "500", margin: 10 }}>
-            Verification
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              padding: 10,
-              marginBottom: 20,
-              color: "#716F6F",
-            }}
-          >
-            Enter your OTP sent to your mobile number
-          </Text>
-          <TextField isOTP={true} placeholder="OTP" onTextChange={setOtp} />
-
-          <ButtonWithTitle
-            title="Verify OTP"
-            onTap={onTapVerify}
-            width={340}
-            height={50}
-          />
-          <ButtonWithTitle
-            disable={!canRequestOtp}
-            title={requestOtpTitle}
-            isNoBg={true}
-            onTap={onTapRequestNewOTP}
-            width={430}
-            height={50}
-          />
+      <View
+        style={{
+          paddingTop: 50,
+          alignItems: "center",
+          backgroundColor: "#fff",
+          height: "100%",
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 20,
+            color: "#c0c0c0",
+            marginTop: 35,
+            fontWeight: "bold",
+          }}
+        >
+          Xác nhận tài khoản
+        </Text>
+        <Image
+          source={require("../images/receiveOTP.png")}
+          style={{ marginTop: 80 }}
+        />
+        <Text
+          style={{
+            fontSize: 20,
+            marginTop: 40,
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
+          Xác nhận{"\n"}số điện thoại thành công
+        </Text>
+        <Text
+          style={{
+            fontSize: 16,
+            padding: 10,
+            marginTop: 20,
+            marginBottom: 20,
+            color: "gray",
+          }}
+        >
+          Nhập mã OTP được gửi tới điện thoại của bạn
+        </Text>
+        <TextField isOTP={true} placeholder="OTP" onTextChange={setOtp} />
+        <View style={{ display: "flex", flexDirection: "row" }}>
+          <Text style={{ color: "gray" }}>{requestOtpTitle}</Text>
+          {canRequestOtp ? (
+            <Text
+              onPress={onTapRequestNewOTP}
+              style={{ marginLeft: 5, color: "#ff604e" }}
+            >
+              Gửi lại OTP
+            </Text>
+          ) : (
+            <></>
+          )}
         </View>
-        <View style={styles.footer}></View>
+
+        <LinearGradient
+          // Button Linear Gradient
+          colors={["#FF8593", "#ff604e"]}
+          style={{
+            height: 50,
+            width: "40%",
+            marginTop: 20,
+            borderRadius: 30,
+            justifyContent: "center",
+          }}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        >
+          <Text
+            style={{ textAlign: "center", color: "white", fontSize: 15 }}
+            onPress={onTapVerify}
+          >
+            Xác nhận OTP
+          </Text>
+        </LinearGradient>
       </View>
     );
   } else {
@@ -230,7 +267,10 @@ const _LoginScreen: React.FC<LoginProps> = ({
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
           >
-            <Text style={{ textAlign: "center" }} onPress={onTapAuthenticate}>
+            <Text
+              style={{ textAlign: "center", color: "white", fontSize: 15 }}
+              onPress={onTapAuthenticate}
+            >
               {title}
             </Text>
           </LinearGradient>
@@ -241,11 +281,11 @@ const _LoginScreen: React.FC<LoginProps> = ({
           </Text>
 
           {/* <ButtonWithTitle
-            title={title}
-            height={50}
-            width={350}
-            onTap={onTapAuthenticate}
-          /> */}
+              title={title}
+              height={50}
+              width={350}
+              onTap={onTapAuthenticate}
+            /> */}
         </View>
       </View>
     );
@@ -267,6 +307,15 @@ const styles = StyleSheet.create({
   },
   body: { flex: 6, justifyContent: "center", alignItems: "center" },
   footer: { flex: 3 },
+  textInputView: {
+    borderBottomWidth: 1,
+    width: 50,
+    justifyContent: "center",
+    alignContent: "center",
+  },
+  textInputText: {
+    fontSize: 30,
+  },
 });
 
 const mapStateToProps = (state: ApplicationState) => ({

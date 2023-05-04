@@ -52,12 +52,12 @@ export const _HomeScreen: React.FC<HomeProps> = (props) => {
         <View style={styles.container}>
             <View style={styles.navigation}> 
                 <View style={{ marginTop: 50, flex: 4, backgroundColor: 'white', paddingLeft: 5, paddingRight: 20, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row'}}>
-                    <Image source={require('../images/delivery_icon.png')} style={{width: 32, height: 32}} />
+                    <Image source={require('../images/delivery-truck.png')} style={{width: 32, height: 32}} />
                     <Text style={{width: 320, marginRight: 5}}>{location.displayAddress} </Text> 
                     <ButtonWithIcon onTap={() => {navigate('LocationPage')}} icon={require('../images/edit_icon.png')} width={24} height={24} />
 
                 </View>
-                <View style={{ display: 'flex', height: 60, justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', marginLeft: -10}}>
+                <View style={{ display: 'flex', height: 60, justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', marginLeft: -10, paddingRight: 9}}>
                     <SearchBar didTouch={() => {
                         navigate('SearchPage')
                     }}  onTextChange={() => {}} />
@@ -76,7 +76,7 @@ export const _HomeScreen: React.FC<HomeProps> = (props) => {
                         keyExtractor={(item) => `${item._id}`}
                     />
                     <View>
-                        <Text style={{fontSize: 25, fontWeight: '600', color: '#f15b5d', marginLeft: 20 }} > Top Restaurants</Text>
+                        <Text style={{fontSize: 25, fontWeight: '600', color: '#f15b5d', marginLeft: 20 }} >Quán ăn gần đây </Text>
                     </View>
 
                     <FlatList 
@@ -89,7 +89,7 @@ export const _HomeScreen: React.FC<HomeProps> = (props) => {
                     />
 
                     <View>
-                        <Text style={{fontSize: 25, fontWeight: '600', color: '#f15b5d', marginLeft: 20 }} > 30 Minutes Foods</Text>
+                        <Text style={{fontSize: 25, fontWeight: '600', color: '#f15b5d', marginLeft: 20 }} >Món ăn gần đây</Text>
                     </View>
                     <FlatList 
                         key='foods'

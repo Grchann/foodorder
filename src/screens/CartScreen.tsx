@@ -118,37 +118,37 @@ const _CartScreen: React.FC<CartScreenProps> = (props) => {
                     <Text style={{fontSize: 18, fontWeight: '600', color: '#525252', marginBottom: 10}}>Offers & Deals</Text>
                     {appliedOffer._id !== undefined ?
                     <View style={{flex: 1}}>
-                        <Text style={{fontSize: 14, fontWeight: '500', color: '#3D933F'}}>Applied {appliedOffer.offerPercentage}% of Discount</Text>
+                        <Text style={{fontSize: 14, fontWeight: '500', color: '#3D933F'}}>Áp dụng giảm giá {appliedOffer.offerPercentage}%</Text>
                     </View>
                     :   
                     <View>
-                        <Text style={{color: '#EE6840', fontSize: 16}}>You can apply available Offers. *TnC Apply</Text>
+                        <Text style={{color: '#EE6840', fontSize: 16}}>Bạn có thể áp dụng ưu đãi có sẵn. *TnC Apply</Text>
                     </View>}
                 </View>
                 <Image source={require('../images/arrow_icon.png')} style={{width: 30, height: 30}}/>
             </TouchableOpacity>
 
             <View style={[styles.row, {height: 250, justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'column'}]}>
-                <Text style={{flex: 1, fontSize: 18, fontWeight: '600', color: '#525252', marginBottom: 10}}>Bill Details</Text>
+                <Text style={{flex: 1, fontSize: 18, fontWeight: '600', color: '#525252', marginBottom: 10}}>Chi tiết hóa đơn</Text>
                 
                 <View style={styles.paymentInfo}>
-                    <Text style={{flex: 1, fontSize: 14}}>Total</Text>
+                    <Text style={{flex: 1, fontSize: 14}}>Tổng</Text>
                     <Text style={{fontSize: 16}}>{totalAmount.toFixed(3)} VNĐ</Text>
                 </View>
 
-                <View style={styles.paymentInfo}>
-                    <Text style={{flex: 1, fontSize: 14}}>Tax & Delivery Charge</Text>
+                {/* <View style={styles.paymentInfo}>
+                    <Text style={{flex: 1, fontSize: 14}}>Thuế & Phí giao hàng</Text>
                     <Text style={{fontSize: 16}}>{totalTax.toFixed(3)} VNĐ</Text>
-                </View>
+                </View> */}
 
                 {appliedOffer._id !== undefined &&
                 <View style={styles.paymentInfo}>
-                    <Text style={{flex: 1, fontSize: 14}}>Discount (applied {appliedOffer.offerPercentage}% Offer)</Text>
+                    <Text style={{flex: 1, fontSize: 14}}>Giảm giá (áp dụng ưu đãi {appliedOffer.offerPercentage}%)</Text>
                     <Text style={{fontSize: 16}}>{discount.toFixed(3)} VNĐ</Text>
                 </View>}
                 
                 <View style={styles.paymentInfo}>
-                    <Text style={{flex: 1, fontSize: 14}}>Net Payable</Text>
+                    <Text style={{flex: 1, fontSize: 14}}>Thành tiền</Text>
                     <Text style={{fontSize: 16}}>{payableAmount.toFixed(3)} VNĐ</Text>
                 </View>
             </View>
@@ -193,7 +193,7 @@ const _CartScreen: React.FC<CartScreenProps> = (props) => {
                             source={require('../images/delivery_icon.png')}
                             style={{width: 50, height: 50}}/>
                         <View>
-                            <Text style={{fontSize: 16, fontWeight: '600', marginBottom: 5}}>Address Used to Delivery</Text>
+                            <Text style={{fontSize: 16, fontWeight: '600', marginBottom: 5}}>Địa chỉ được sử dụng để giao hàng</Text>
                             <Text style={{fontSize: 16, color: '#666666', marginBottom: 5, width: Dimensions.get('screen').width - 60}}>{location.displayAddress}</Text>
                         </View>
                     </View>
@@ -235,7 +235,7 @@ const _CartScreen: React.FC<CartScreenProps> = (props) => {
             <View style={styles.container}>
                 <View style={styles.navigation}> 
                     <View style={{ display: 'flex', height: 60, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20,}}>
-                        <Text style={{ fontSize: 22, fontWeight: '600'}}> My Cart</Text>
+                        <Text style={{ fontSize: 22, fontWeight: '600'}}>Giỏ hàng</Text>
                         {user.token !== undefined && <TouchableOpacity
                             style={{ alignItems: "center" }}
                             onPress={() => {
@@ -264,7 +264,7 @@ const _CartScreen: React.FC<CartScreenProps> = (props) => {
                 </View>
                 <View style={styles.footer}>
                     <View style={styles.amountView}>
-                        <Text style={{ fontSize: 18 }}> Total</Text>
+                        <Text style={{ fontSize: 18 }}> Tổng thanh toán</Text>
                         <Text style={{ fontSize: 18, fontWeight: "600" }}>
                             {payableAmount.toFixed(3)} VNĐ
                         </Text>
@@ -272,7 +272,7 @@ const _CartScreen: React.FC<CartScreenProps> = (props) => {
                     <ButtonWithTitle 
                         height={50}
                         width={320}
-                        title="Make Payment"
+                        title="Thanh toán"
                         onTap={onValidateOrder}
                     />
                 </View>
@@ -287,7 +287,7 @@ const _CartScreen: React.FC<CartScreenProps> = (props) => {
             <View style={styles.container}>
                 <View style={styles.navigation}> 
                     <View style={{ display: 'flex', height: 60, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20,}}>
-                        <Text style={{ fontSize: 22, fontWeight: '600'}}> My Cart</Text>
+                        <Text style={{ fontSize: 22, fontWeight: '600'}}>Giỏ hàng</Text>
                         {user.token !== undefined && <TouchableOpacity
                             style={{ alignItems: "center" }}
                             onPress={() => {

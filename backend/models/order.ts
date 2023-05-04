@@ -19,7 +19,7 @@ export const generateOrder = (orders: [DBOrder])=>{
         items: [],
         totalAmount: 0,
         orderDate: new Date(),
-        paidThrough: 'cash',
+        paidThrough: 'cast',
         paymentResponse: '',
         orderStatus: 'waiting',
         offer: null

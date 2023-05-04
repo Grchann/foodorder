@@ -63,9 +63,9 @@ const _OrderDetailScreen: React.FC<OrderDetailScreenProps> = (props) => {
             </View>
         }else{
             return <>
-                <View style={{display: 'flex', margin: 10, justifyContent: 'center', alignItems: 'center', height: 300, backgroundColor: '#C5C5C5'}}>
+                {/* <View style={{display: 'flex', margin: 10, justifyContent: 'center', alignItems: 'center', height: 300, backgroundColor: '#C5C5C5'}}>
                     <Text style={{fontSize: 18}}> Map View will go here... </Text>
-                </View>
+                </View> */}
                 <View style={{marginBottom: 10}}>
                     <ButtonWithTitle title='Cancel Order' onTap={()=>onTapCancelOrder()} height={50} width={320}/>
                 </View>
@@ -81,8 +81,8 @@ const _OrderDetailScreen: React.FC<OrderDetailScreenProps> = (props) => {
                     <ButtonWithIcon 
                         icon={require('../images/back_arrow.png')}
                         onTap={()=> goBack()}
-                        width={32}
-                        height={38} />
+                        width={30}
+                        height={30} />
                     <Text style={{ fontSize: 22, fontWeight: '600', marginLeft: 30}}>Order ID: {order.orderID}</Text>
                 </View>
             </View>

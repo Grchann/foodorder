@@ -120,15 +120,15 @@ interface LocationProps{
                 <ButtonWithIcon 
                     icon={require('../images/back_arrow.png')} 
                     onTap={()=>navigate('HomePage')}
-                    width={40}
-                    height={50}/>
+                    width={30}
+                    height={30}/>
                 <View style={{display: 'flex', flex: 1, marginRight: 10}}>
                     <LocationPick onChangeLocation={onChangeLocation}/>
                 </View>
             </View>
             <View style={styles.centerMsg}>
                 <Image source={require('../images/delivery_icon.png')} style={styles.deliveryIcon} />
-                <Text style={styles.addressTitle}>Pick your Location</Text>
+                <Text style={styles.addressTitle}>Chọn vị trí của bạn</Text>
             </View>
         </View>
     }
@@ -138,7 +138,7 @@ interface LocationProps{
             <View style={styles.navigation}> 
                 <View style={{ display: 'flex', height: 60, justifyContent: 'flex-start', 
                     flexDirection: 'row', alignItems: 'center', marginLeft: 4, paddingLeft: 10}}>
-                    <ButtonWithIcon icon={require('../images/back_arrow.png')} onTap={() => navigate("HomePage")} width={40} height={50} />
+                    <ButtonWithIcon icon={require('../images/back_arrow.png')} onTap={() => navigate("HomePage")} width={30} height={30} />
                     <View style={{flex: 1, marginLeft: 20}}>
                         <Text style={{fontSize: 18, fontWeight: '500', color: '#656565'}}>Pick your Location from Map</Text>
                     </View>

@@ -3,7 +3,7 @@ import { Dispatch } from 'react'
 import { BASE_URL, MAP_API_KEY } from '../../utils'
 import AsyncStorage from '@react-native-community/async-storage'
 import { FoodModel, OfferModel, OrderModel, UserModel, Address, PickedLocationResult } from '../models'
-import { onBECancelOrder, onBECreateOrder, onBEGetOrders, onLogin, onSignUp } from '../../../backend/controllers'
+import { onBECancelOrder, onBECreateOrder, onBEGetOrders, onConfirmOTP, onLogin, onSignUp } from '../../../backend/controllers'
 
 export interface UpdateLocationAction{
     readonly type: 'ON_UPDATE_LOCATION',
@@ -218,7 +218,7 @@ export const onUserSignup = (email: string, phone: string ,password: string) => 
 
             const response = await onSignUp(email, password, phone)
 
-            // console.log(response)
+            console.log(response)
 
             if(!response.body.data){
                 dispatch({
@@ -251,11 +251,13 @@ export const onVerifyOTP = (otp: string, user: UserModel) => {
     return async ( dispatch: Dispatch<UserAction>) => {
 
         try {
-            axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`
+            // axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`
 
-            const response = await axios.patch<UserModel>(`${BASE_URL}user/verify`, {
-                otp
-            })
+            // const response = await axios.patch<UserModel>(`${BASE_URL}user/verify`, {
+            //     otp
+            // })
+
+            const response = await onConfirmOTP(user._id, otp)
 
             // console.log(response)
 
@@ -267,7 +269,7 @@ export const onVerifyOTP = (otp: string, user: UserModel) => {
             }else{
                 dispatch({
                     type: 'ON_USER_LOGIN',
-                    payload: response.data
+                    payload: response.body.data as UserModel
                 })
             }
         } catch (error) {

@@ -74,7 +74,8 @@ const UserReducer = (state: UserState = initialState, action: UserAction) => {
         case 'ON_USER_LOGOUT':
             return {
                 ...state,
-                user: {} as UserModel
+                user: {} as UserModel,
+                Cart: []
             }
 
         case 'ON_CLEAR_CART':
