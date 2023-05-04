@@ -3,7 +3,7 @@ import { Address } from 'expo-location'
 import { Dispatch } from 'react'
 import { BASE_URL } from '../../utils'
 import { Category, FoodAvailability, FoodModel, OfferModel, Restaurant } from '../models'
-import { onGetAvailability } from '../../../backend/controllers'
+import { onGetAvailability, onGetAvailableFoods } from '../../../backend/controllers'
 import { readJSON } from '../../../backend/utils'
 import { onGetOffers } from '../../../backend/controllers/offer'
 
@@ -134,7 +134,15 @@ export const onSearchFoods = (postCode: string) => {
 
         try {
 
-            const response = await axios.get<[FoodModel]>(`${BASE_URL}food/search/${POST_CODE}`)
+            // const response = await axios.get<[FoodModel]>(`${BASE_URL}food/search/${POST_CODE}`)
+            const response = await onGetAvailableFoods(LAT, LNG)
+
+            const newFoods = response.body.data.map(food=>{
+                return {
+                    ...food,
+                    unit: 0
+                }
+            }) as [any]
 
             // console.log(response)
             // replaceFoodsURL(response.data)
@@ -148,7 +156,7 @@ export const onSearchFoods = (postCode: string) => {
                 // save our location in local storage
                 dispatch({
                     type: 'ON_FOODS_SEARCH',
-                    payload: response.data
+                    payload: newFoods
                 })
             }
 

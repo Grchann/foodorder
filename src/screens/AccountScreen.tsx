@@ -31,11 +31,11 @@ const _AccountScreen: React.FC<AccountScreenProps> = (props) => {
 
   const { user } = props.userReducer;
 
-  useEffect(() => {
-    if (user.token === undefined) {
-      navigate("LoginPage");
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user.token === undefined) {
+  //     navigate("LoginPage");
+  //   }
+  // }, [user]);
 
   const optionCard = (title: string, action: Function) => {
     return (
@@ -88,7 +88,7 @@ const _AccountScreen: React.FC<AccountScreenProps> = (props) => {
       },
     },
   ];
-  if (user._id !== undefined) {
+  if (user !== undefined && user._id !== undefined) {
     return (
       <View style={styles.container}>
         <View style={styles.navigation}>
@@ -133,6 +133,7 @@ const _AccountScreen: React.FC<AccountScreenProps> = (props) => {
       </View>
     );
   } else {
+    navigate('LoginPage');
     return <></>;
   }
 };

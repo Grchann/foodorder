@@ -46,7 +46,13 @@ const _SearchScreen: React.FC<SearchScreenProps> = (props) => {
                     isEditing 
                     ? 
                     availableFoods.filter((item) => {
-                        return item.name.includes(keyword)
+                        // for (let word of keyword.split(' ')){
+                        //     if (item.name.toLowerCase().includes(word.toLowerCase())){
+                        //         return true
+                        //     }
+                        // }
+                        // return false
+                        return item.name.toLowerCase().includes(keyword.toLowerCase())
                     })
                     : availableFoods
                 }

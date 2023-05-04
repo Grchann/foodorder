@@ -84,7 +84,7 @@ const _LoginScreen: React.FC<LoginProps> = ({
 
   const onEnableOtpRequest = () => {
     const otpDate = new Date();
-    otpDate.setTime(new Date().getTime() + 0.1 * 60 * 1000);
+    otpDate.setTime(new Date().getTime() + 2 * 60 * 1000);
     const otpTime = otpDate.getTime();
 
     countDown = setInterval(() => {

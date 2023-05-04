@@ -50,3 +50,26 @@ export const onGetAvailability = async (lat: number, lng: number)=>{
         }
     }
 }
+
+export const onGetAvailableFoods = async (lat: number, lng: number)=>{
+    const dbFoods = (await readJSON(PATH_FOOD_JSON)) as [DBFood];
+    transformURLFoods(dbFoods)
+    const dbCategories = (await readJSON(PATH_CATEGORIES_JSON)) as [DBCategory];
+
+    const availableRestaurants = (await onGetAvailableRestaurants(lat, lng)) as [any];
+    for (let idRest = 0; idRest < availableRestaurants.length; idRest++){
+        const indicesFood = availableRestaurants[idRest].foods
+
+        availableRestaurants[idRest].foods = dbFoods.filter(food=> indicesFood.indexOf(food._id) > -1);
+    }
+    // const availableIDFoods = availableRestaurants.reduce((foods, currentRest)=>foods.concat(currentRest.foods), []);
+    // const availableFoods = dbFoods.filter(food=> availableIDFoods.indexOf(food._id) > -1);
+    const availableFoods = availableRestaurants.reduce((foods, currentRest)=>foods.concat(currentRest.foods), []) as [DBFood];
+    
+    return {
+        status: 200,
+        body:{
+            data: availableFoods
+        }
+    }
+}
