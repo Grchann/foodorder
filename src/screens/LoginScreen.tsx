@@ -43,6 +43,15 @@ const _LoginScreen: React.FC<LoginProps> = ({
   );
   const [canRequestOtp, setCanRequestOtp] = useState(false);
 
+  const [isInvalidEmail, setIsInvalidEmail] = useState(false);
+  const [errEmail, setErrEmail] = useState('');
+  const [isInvalidPassword, setIsInvalidPassword] = useState(false);
+  const [errPassword, setErrPassword] = useState('');
+  const [isInvalidPhone, setIsInvalidPhone] = useState(false);
+  const [errPhone, setErrPhone] = useState('');
+  const [isInvalidOTP, setIsInvalidOTP] = useState(false);
+  const [errOTP, setErrOTP] = useState('');
+
   let countDown: any;
 
   const { user } = userReducer;
@@ -75,10 +84,20 @@ const _LoginScreen: React.FC<LoginProps> = ({
 
   const onTapAuthenticate = () => {
     if (isSignup) {
-      onUserSignup(email, phone, password);
+      validateEmail(email);
+      validatePhone(phone);
+      validatePassword(password);
+      if (!(isInvalidEmail || isInvalidPassword || isInvalidPhone)){
+        onUserSignup(email, phone, password);
+      }
     } else {
-      onUserLogin(email, password);
-      console.log("logingin");
+      validateEmail(email);
+      validatePassword(password);
+      if (!(isInvalidEmail || isInvalidPassword)){
+        onUserLogin(email, password);
+        console.log("logingin");
+      }
+      
     }
   };
 
@@ -115,6 +134,47 @@ const _LoginScreen: React.FC<LoginProps> = ({
     onEnableOtpRequest();
   };
 
+
+  const validateEmail = (email: string) => {
+    if (email === undefined || email === '' || email.trim() === ''){
+      setIsInvalidEmail(true);
+      setErrEmail('Không được để trống hoặc chỉ có dấu khoảng cách')
+    }
+    // if (!email.includes('@')){
+    //   setIsInvalidEmail(true);
+    //   setErrEmail('Định dạng email chưa đúng')
+    // }
+    else if (!email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/)){
+      setIsInvalidEmail(true);
+      setErrEmail('Định dạng email chưa đúng')
+    }
+  };
+
+  const validatePassword = (password: string) => {
+    if (password === undefined || password === ''){
+      setIsInvalidPassword(true);
+      setErrPassword('Không được để trống')
+    }
+  };
+
+  const validatePhone = (phone: string) => {
+    if (phone === undefined || phone === '' || phone.trim() === ''){
+      setIsInvalidPhone(true);
+      setErrPhone('Không được để trống hoặc chỉ có dấu khoảng cách')
+    }
+    if (!(phone[0] === '0' || phone[0] === '+')){
+      setIsInvalidPhone(true);
+      setErrPhone('Định dạng số điện thoại chưa đúng')
+    }
+  };
+
+  const validateOTP = (otp: string) => {
+    if (otp === undefined || otp === '' || otp.trim() === ''){
+      setIsInvalidOTP(true);
+      setErrOTP('Không được để trống hoặc chỉ có dấu khoảng cách')
+    }
+  };
+
   if (user._id !== undefined && !verified) {
     //show OTP Page
     return (
@@ -122,7 +182,7 @@ const _LoginScreen: React.FC<LoginProps> = ({
         style={{
           paddingTop: 50,
           alignItems: "center",
-          backgroundColor: "#fff",
+          backgroundColor: "#f1f1f1",
           height: "100%",
         }}
       >
@@ -161,7 +221,27 @@ const _LoginScreen: React.FC<LoginProps> = ({
         >
           Nhập mã OTP được gửi tới điện thoại của bạn
         </Text>
-        <TextField isOTP={true} placeholder="OTP" onTextChange={setOtp} />
+        {/* <TextField isOTP={true} placeholder="OTP" onTextChange={setOtp} /> */}
+        <TextInput
+          placeholder="494949"
+          style={[styles.textInput, {margin: 10, height: 60, fontSize: 30, textAlign: 'center', paddingStart: 14, borderColor: isInvalidEmail ? '#ff0000' : '#fff'}]}
+          maxLength={6}
+          keyboardType="numeric"
+          onChangeText={setOtp}
+          onFocus={()=>{
+            setIsInvalidOTP(false);
+            setErrOTP('');
+          }}
+          onBlur={()=>{
+            validateOTP(otp);
+          }}
+        />
+        {isInvalidOTP ? (
+          <View style={styles.invalidMessageContainer}>
+            <Text style={styles.invalidMessage}>{errOTP}</Text>
+          </View>
+        ) : (<></>)}
+        
         <View style={{ display: "flex", flexDirection: "row" }}>
           <Text style={{ color: "gray" }}>{requestOtpTitle}</Text>
           {canRequestOtp ? (
@@ -235,24 +315,65 @@ const _LoginScreen: React.FC<LoginProps> = ({
           </Text>
           <TextInput
             placeholder="thientrang@gmail.com"
-            style={styles.textInput}
+            style={[styles.textInput, {borderColor: isInvalidEmail ? '#ff0000' : '#fff'}]}
             onChangeText={setEmail}
+            onFocus={()=>{
+              setIsInvalidEmail(false);
+              setErrEmail('');
+            }}
+            onBlur={()=>{
+              validateEmail(email);
+            }}
           />
-          {isSignup ? (
+            {isInvalidEmail ? (
+              <View style={styles.invalidMessageContainer}>
+                <Text style={styles.invalidMessage}>{errEmail}</Text>
+              </View>
+            ) : (<></>)}
+          
+          {isSignup ? (<>
             <TextInput
-              placeholder="0123456789"
-              style={styles.textInput}
-              onChangeText={setPhone}
-            />
+                placeholder="0123456789"
+                style={[styles.textInput, {borderColor: isInvalidPhone ? '#ff0000' : '#fff'}]}
+                keyboardType="numeric"
+                onChangeText={setPhone}
+                onFocus={()=>{
+                  setIsInvalidPhone(false);
+                  setErrPhone('');
+                }}
+                onBlur={()=>{
+                  validatePhone(phone);
+                }}
+              />
+              {isInvalidPhone ? (
+                <View style={styles.invalidMessageContainer}>
+                  <Text style={styles.invalidMessage}>{errPhone}</Text>
+                </View>
+              ) : (<></>)}
+          </>
+              
+            
           ) : (
             <></>
           )}
           <TextInput
             placeholder="password"
-            style={styles.textInput}
+            style={[styles.textInput, {borderColor: isInvalidPassword ? '#ff0000' : '#fff'}]}
             onChangeText={setPassword}
             secureTextEntry={true}
+            onFocus={()=>{
+              setIsInvalidPassword(false);
+              setErrPassword('');
+            }}
+            onBlur={()=>{
+              validatePassword(password);
+            }}
           />
+          {isInvalidPassword ? (
+            <View style={styles.invalidMessageContainer}>
+              <Text style={styles.invalidMessage}>{errPassword}</Text>
+            </View>
+          ) : (<></>)}
 
           <LinearGradient
             // Button Linear Gradient
@@ -304,6 +425,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 30,
     backgroundColor: "#fff",
+    borderWidth: 0.5
   },
   body: { flex: 6, justifyContent: "center", alignItems: "center" },
   footer: { flex: 3 },
@@ -316,6 +438,18 @@ const styles = StyleSheet.create({
   textInputText: {
     fontSize: 30,
   },
+  invalidMessage: {
+    color: '#ff0000',
+    fontSize: 10,
+  },
+  invalidMessageContainer: {
+    width: "80%",
+    height: 30,
+    paddingStart: 30,
+    marginTop: 6,
+    marginBottom: -14,
+    justifyContent: 'flex-start',
+  }
 });
 
 const mapStateToProps = (state: ApplicationState) => ({
