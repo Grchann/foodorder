@@ -37,9 +37,13 @@ export interface OfferSearchAction{
     readonly type: 'ON_OFFER_SEARCH',
     payload: [OfferModel]
 }
+export interface ResetFoodsAction{
+    readonly type: 'ON_RESET_FOODS',
+    payload: FoodAvailability
+}
 
 
-export type ShoppingAction = AvailabilityAction | ShoppingErrorAction | FoodSearchAction | OfferSearchAction
+export type ShoppingAction = AvailabilityAction | ShoppingErrorAction | FoodSearchAction | OfferSearchAction | ResetFoodsAction
 
 function replaceFoodsURL(foods:any){
     
@@ -208,6 +212,24 @@ export const onGetOffer = (postCode: string) => {
             })
         }
     }
+}
+
+export const onResetFoods = (availability: FoodAvailability)=>{
+    return async ( dispatch: Dispatch<ShoppingAction>) => {
+        for (let idFood = 0; idFood<availability.foods.length; idFood++){
+            availability['foods'][idFood].unit = 0;
+        }
+        for (let idRes = 0; idRes<availability.restaurants.length; idRes++){
+            for (let idFood = 0; idFood<availability.restaurants[idRes].foods.length; idFood++){
+                availability['restaurants'][idRes]['foods'][idFood].unit = 0;
+            }
+        }
+        dispatch({
+            type: 'ON_RESET_FOODS',
+            payload: availability
+        })
+    }
+
 }
 
 

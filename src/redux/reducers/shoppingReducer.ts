@@ -29,6 +29,12 @@ const ShoppingReducer = (state: ShoppingState = initialState, action: ShoppingAc
                 offers: action.payload
             }
 
+        case 'ON_RESET_FOODS':
+            return {
+                ...state,
+                availability: action.payload
+            }
+
 
         default:
             return state

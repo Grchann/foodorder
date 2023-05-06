@@ -56,8 +56,12 @@ export const onBECreateOrder = async (idUser: string, order: any)=>{
         unTransformOrder(newOrder);
         dbOrders.push(newOrder);
         createJSON(PATH_ORDER_JSON, dbOrders);
-        
-        dbUsers[indexUser].orders.push(order._id);
+        if (Array.isArray(dbUsers[indexUser].orders)){
+            dbUsers[indexUser].orders.push(order._id);
+        }else{
+            dbUsers[indexUser].orders = [order._id]
+        }
+
         createJSON(PATH_USER_JSON, dbUsers)
 
         return {

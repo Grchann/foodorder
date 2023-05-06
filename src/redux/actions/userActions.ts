@@ -374,7 +374,7 @@ export const onCreateOrder = (cartItems: [FoodModel], user: UserModel, offer: Of
 
             const response = await onBECreateOrder(user._id, order)
 
-            console.log(response)
+            // console.log(response)
 
             if(!response.body.data){
                 dispatch({
@@ -407,7 +407,7 @@ export const onGetOrder = (user: UserModel) => {
             // const response = await axios.get<[OrderModel]>(`${BASE_URL}user/order` )
             const response = await onBEGetOrders(user._id)
 
-            console.log(response)
+            // console.log(response)
 
             if(!response.body.data){
                 dispatch({

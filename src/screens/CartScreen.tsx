@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createRef} from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, Image, Dimensions, Alert } from 'react-native'
 import { connect } from 'react-redux'
-import { ApplicationState, FoodModel, ShoppingState, onUpdateCart, onCreateOrder, onApplyOffer, onClearCart, UserState } from '../redux'
+import { ApplicationState, FoodModel, ShoppingState, onUpdateCart, onCreateOrder, onApplyOffer, onClearCart, onResetFoods, UserState } from '../redux'
 
 import { ButtonWithIcon, FoodCard, FoodCardInfo, SearchBar, ButtonWithTitle } from '../components'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
@@ -16,7 +16,8 @@ interface CartScreenProps{
     onUpdateCart: Function,
     onCreateOrder: Function,
     onApplyOffer: Function,
-    onClearCart: Function
+    onClearCart: Function,
+    onResetFoods: Function,
  }
 
 
@@ -104,6 +105,7 @@ const _CartScreen: React.FC<CartScreenProps> = (props) => {
         props.onApplyOffer(appliedOffer, true);
         setTimeout(() => {
             props.onClearCart();
+            props.onResetFoods(props.shoppingReducer.availability);
         }, 500);
     }
 
@@ -401,6 +403,6 @@ const mapStateToProps = (state: ApplicationState) => ({
 })
 
 
-const CartScreen = connect(mapStateToProps, {onUpdateCart, onCreateOrder, onApplyOffer, onClearCart})(_CartScreen)
+const CartScreen = connect(mapStateToProps, {onUpdateCart, onCreateOrder, onApplyOffer, onClearCart, onResetFoods})(_CartScreen)
 
  export { CartScreen }
