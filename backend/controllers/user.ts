@@ -120,3 +120,30 @@ export const onConfirmOTP = async (idUser: string, otp: string)=>{
         }
     }
 }
+
+export const onChangeProfile = async (idUser: string, firstName: string, lastName: string) => {
+    const users = (await readJSON(PATH_USER_JSON)) as [DBUser]
+    const indexUser = users.findIndex(user=>user._id === idUser)
+    // console.log(indexUser)
+    if (indexUser !== -1){
+        users[indexUser].firstName = firstName;
+        users[indexUser].lastName = lastName;
+        createJSON(PATH_USER_JSON, users);
+        return {
+            status: 200,
+            body: {
+                data: {
+                    ...users[indexUser],
+                    token: 'TEMP'
+                }
+            }
+        }
+    }else{
+        return {
+            status: 404, // Not found
+            body:{
+                message: 'Tài khoản chưa được đăng ký'
+            }
+        }
+    }
+}

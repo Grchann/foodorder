@@ -3,7 +3,7 @@ import { Dispatch } from 'react'
 import { BASE_URL, MAP_API_KEY } from '../../utils'
 import AsyncStorage from '@react-native-community/async-storage'
 import { FoodModel, OfferModel, OrderModel, UserModel, Address, PickedLocationResult } from '../models'
-import { onBECancelOrder, onBECreateOrder, onBEGetOrders, onConfirmOTP, onLogin, onSignUp } from '../../../backend/controllers'
+import { onBECancelOrder, onBECreateOrder, onBEGetOrders, onChangeProfile, onConfirmOTP, onLogin, onSignUp } from '../../../backend/controllers'
 
 export interface UpdateLocationAction{
     readonly type: 'ON_UPDATE_LOCATION',
@@ -53,6 +53,10 @@ export interface FetchLocationAction{
     readonly type: 'ON_FETCH_LOCATION',
     payload: any
 }
+export interface EditProfileAction{
+    readonly type: 'ON_EDIT_PROFILE',
+    payload: UserModel
+}
 
 
 
@@ -67,7 +71,8 @@ export type UserAction =
     CreateOrderAction | 
     ViewOrderAction |
     AddRemoveOfferAction |
-    FetchLocationAction;
+    FetchLocationAction |
+    EditProfileAction;
 
 
 // User Actions trigger from Components
@@ -474,6 +479,38 @@ export const onApplyOffer = (offer: OfferModel, isRemove: boolean) => {
             dispatch({
                 type: 'ON_ADD_OFFER',
                 payload: offer
+            })
+        }
+            
+    }
+
+}
+
+export const onEditProfile = (user: UserModel, firstName: string, lastName: string) => {
+
+     
+    return async (dispatch: Dispatch<UserAction>) => {
+        try {
+            const response = await onChangeProfile(user._id, firstName, lastName)
+
+            // console.log(response)
+
+            if(!response.body.data){
+                dispatch({
+                    type: 'ON_USER_ERROR',
+                    payload: 'Login Error'
+                })
+            }else{
+                dispatch({
+                    type: 'ON_USER_LOGIN',
+                    payload: response.body.data
+                })
+            }
+        } catch (error) {
+            console.log('catch: ', error)
+            dispatch({
+                type: 'ON_USER_ERROR',
+                payload: error
             })
         }
             

@@ -175,7 +175,7 @@ const _LoginScreen: React.FC<LoginProps> = ({
     }
   };
 
-  if (user._id !== undefined && !verified) {
+  if (user._id !== undefined && !user.verified) {
     //show OTP Page
     return (
       <View

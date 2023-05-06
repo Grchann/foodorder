@@ -67,20 +67,20 @@ const _AccountScreen: React.FC<AccountScreenProps> = (props) => {
   };
 
   const options = [
-    {
-      title: "Chỉnh sửa hồ sơ",
-      action: () => {},
-    },
+    // {
+    //   title: "Chỉnh sửa hồ sơ",
+    //   action: () => {},
+    // },
     {
       title: "Xem đơn hàng",
       action: () => {
         navigate("AccountOrderPage");
       },
     },
-    {
-      title: "Liên hệ hỗ trợ",
-      action: () => {},
-    },
+    // {
+    //   title: "Liên hệ hỗ trợ",
+    //   action: () => {},
+    // },
     {
       title: "Đăng xuất",
       action: () => {
@@ -92,26 +92,43 @@ const _AccountScreen: React.FC<AccountScreenProps> = (props) => {
     return (
       <View style={styles.container}>
         <View style={styles.navigation}>
+          <View style={{ width: "100%", height: "80%", overflow: "hidden"}}>
+            <Image
+              source={require("../images/svgtop.png")}
+              style={{ top: -380, left: -100, width: 600, height: 520 }}
+            />
+          </View>
           <View
             style={{
               display: "flex",
               height: 60,
-              justifyContent: "space-between",
+              justifyContent: "flex-start",
               flexDirection: "row",
               alignItems: "center",
               marginLeft: 20,
               marginRight: 20,
+              marginTop: 80,
+              position: 'absolute'
             }}
           >
             <Image
               source={require("../images/avatar.png")}
-              style={{ width: 90, height: 90, marginRight: 20 }}
+              style={{ width: 120, height: 120, marginRight: 20 }}
             />
             <View>
-              <Text style={{ fontSize: 22, fontWeight: "600" }}>
-                {user.firstName || "Tôi"}
-              </Text>
-              <Text style={{ fontSize: 18 }}>{user.email}</Text>
+              <TouchableOpacity 
+                style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}
+                onPress={()=> {navigate('EditProfilePage')}}
+              >
+                <Text style={{ fontSize: 22, fontWeight: "600", color: '#444444' }}>
+                  {user.firstName || user.lastName || "Tôi"}
+                </Text>
+                <Image 
+                  style={{width: 14, height: 14, marginLeft: 10}}
+                  source={require('../images/pencil.png')} />
+              </TouchableOpacity>
+              
+              <Text style={{ fontSize: 18, fontWeight: '400', fontStyle: 'italic' }}>{user.email}</Text>
             </View>
           </View>
         </View>
@@ -140,13 +157,14 @@ const _AccountScreen: React.FC<AccountScreenProps> = (props) => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#F2F2F2" },
-  navigation: {
+  bgNavigation: {
     flex: 1,
-    marginTop: 44,
-    padding: 10,
-    flexDirection: "row",
+  },
+  navigation: {
+    flex: 3.4,
+    // flexDirection: "row",
     justifyContent: "flex-start",
-    alignItems: "center",
+    alignItems: "flex-start",
   },
   body: { flex: 9, display: "flex" },
   footer: {

@@ -22,6 +22,7 @@ import { AccountScreen } from './src/screens/AccountScreen';
 import { OfferScreen } from './src/screens/OfferScreen';
 import { LocationScreen } from './src/screens/LocationScreen';
 import { CategoryDetailScreen } from './src/screens/CategoryDetailScreen';
+import { EditProfileScreen } from './src/screens/EditProfileScreen';
 
 
 const switchNavigator = createSwitchNavigator({
@@ -107,7 +108,8 @@ const switchNavigator = createSwitchNavigator({
           AccountPage: AccountScreen,
           LoginPage: LoginScreen,
           AccountOrderPage: OrderScreen,
-          OrderDetailPage: OrderDetailScreen
+          OrderDetailPage: OrderDetailScreen,
+          EditProfilePage: EditProfileScreen
         },{
           defaultNavigationOptions: {
             headerShown: false
