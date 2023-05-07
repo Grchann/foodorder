@@ -9,7 +9,7 @@ const OTP = '494949'
 const createUser = async (users: [DBUser], email: string, password: string, phone: string)=>{
     // const hashPassword = await BcryptReactNative.hash(SALT, password)
     const hashPassword = password
-    let user = generateUser(users) as DBUser;
+    let user = generateUser(users) as any;
     user.email = email;
     user.password = hashPassword;
     user.phone = phone;
@@ -63,7 +63,7 @@ export const onSignUp = async (email: string, password: string, phone: string)=>
         const user = await createUser(users, email, password, phone);
         // console.log(user)
         users.push(user)
-        createJSON(PATH_USER_JSON, users);
+        await createJSON(PATH_USER_JSON, users);
         return {
             status: 200,
             body:{
@@ -92,7 +92,7 @@ export const onConfirmOTP = async (idUser: string, otp: string)=>{
     if (indexUser !== -1){
         if (otp === OTP){
             users[indexUser].verified = true;
-            createJSON(PATH_USER_JSON, users);
+            await createJSON(PATH_USER_JSON, users);
             return {
                 status: 200,
                 body: {
@@ -128,7 +128,7 @@ export const onChangeProfile = async (idUser: string, firstName: string, lastNam
     if (indexUser !== -1){
         users[indexUser].firstName = firstName;
         users[indexUser].lastName = lastName;
-        createJSON(PATH_USER_JSON, users);
+        await createJSON(PATH_USER_JSON, users);
         return {
             status: 200,
             body: {

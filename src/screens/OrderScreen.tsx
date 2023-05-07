@@ -28,8 +28,8 @@ const _OrderScreen: React.FC<OrderScreenProps> = (props) => {
     // console.log('Available Orders: ', JSON.stringify(orders))
 
     useEffect(() => {
-        props.onGetOrder(user)
-    },[]);
+        props.onGetOrder(user);
+    },[user]);
 
     const onTapOrder = (order: OrderModel)=>{
         navigate('OrderDetailPage', {order})

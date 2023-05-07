@@ -9,8 +9,8 @@ export interface DBUser{
     firstName: string,
     lastName: string,
     verified: boolean,
-    carts: [any], //[idCart]
-    orders: [any]    //[idOrder]
+    carts: [string], //[idCart]
+    orders: [string]    //[idOrder]
 }
 
 
@@ -27,8 +27,8 @@ export const generateUser = (users: [DBUser])=>{
 
         verified: false,
 
-        carts: {} as [string],
-        orders: {} as [string]
+        carts: [],
+        orders: []
     }
 }
 
