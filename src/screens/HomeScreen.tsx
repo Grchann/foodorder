@@ -32,9 +32,9 @@ export const _HomeScreen: React.FC<HomeProps> = (props) => {
  
     useEffect(() => {
         props.onAvailability(location.postalCode)
-        setTimeout(() => {
-            props.onSearchFoods(location.postalCode)
-        }, 1000 )
+        // setTimeout(() => {
+            // props.onSearchFoods(location.postalCode)
+        // }, 4000 )
 
     }, [, location])
 

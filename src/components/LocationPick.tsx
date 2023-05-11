@@ -23,7 +23,7 @@ const LocationPick: React.FC<LocationPickProps> = ({ onChangeLocation }) => {
             }}
             query={{
                 key: MAP_API_KEY,
-                language: 'en'
+                language: 'vi'
             }}
             debounce={300}/>
     </View>

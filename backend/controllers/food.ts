@@ -24,7 +24,7 @@ export const onGetAvailability = async (lat: number, lng: number)=>{
     transformURLFoods(dbFoods)
     const dbCategories = (await readJSON(PATH_CATEGORIES_JSON)) as [DBCategory];
 
-    const availableRestaurants = (await onGetAvailableRestaurants(lat, lng)) as [any];
+    const {availableRestaurants, routes} = (await onGetAvailableRestaurants(lat, lng));
     for (let idRest = 0; idRest < availableRestaurants.length; idRest++){
         const indicesFood = availableRestaurants[idRest].foods
 
@@ -45,7 +45,8 @@ export const onGetAvailability = async (lat: number, lng: number)=>{
             data: {
                 categories: availableCategories,
                 foods: availableFoods,
-                restaurants: availableRestaurants
+                restaurants: availableRestaurants,
+                restaurantsRoute: routes
             }
         }
     }
@@ -54,9 +55,8 @@ export const onGetAvailability = async (lat: number, lng: number)=>{
 export const onGetAvailableFoods = async (lat: number, lng: number)=>{
     const dbFoods = (await readJSON(PATH_FOOD_JSON)) as [DBFood];
     transformURLFoods(dbFoods)
-    const dbCategories = (await readJSON(PATH_CATEGORIES_JSON)) as [DBCategory];
 
-    const availableRestaurants = (await onGetAvailableRestaurants(lat, lng)) as [any];
+    const availableRestaurants = (await onGetAvailableRestaurants(lat, lng)).availableRestaurants as [any];
     for (let idRest = 0; idRest < availableRestaurants.length; idRest++){
         const indicesFood = availableRestaurants[idRest].foods
 

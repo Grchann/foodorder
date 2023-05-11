@@ -62,8 +62,6 @@ const _EditProfileScreen: React.FC<EditProfileScreenProps> = (props) => {
 
 	const onTapSaveButton = () => {
 		if (!validateFirstName(firstName) || !validateLastName(lastName)){
-			console.log(isInvalidFirstName, firstName, user.firstName)
-			console.log(isInvalidLastName, lastName, user.lastName)
 			props.onEditProfile(user, firstName, lastName);
 			props.navigation.goBack();
 		}

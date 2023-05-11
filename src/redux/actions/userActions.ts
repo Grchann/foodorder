@@ -106,11 +106,12 @@ export const onFetchLocation = (lat: number, lng: number) => {
     return async ( dispatch: Dispatch<UserAction>) => {
 
         try {
-            const response = await axios.get<PickedLocationResult>(`http://maps.google.com/maps/api/geocode/json?address=?${lat},${lng}&key=${MAP_API_KEY}`)
+            const response = await axios.get<PickedLocationResult>(`https://maps.google.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${MAP_API_KEY}`)
 
             // const response = {
             //     data: '123 Nguyen Van Linh'
             // }
+            console.log('response: ', response)
 
             if(!response){
                 dispatch({
@@ -122,6 +123,7 @@ export const onFetchLocation = (lat: number, lng: number) => {
 
                 if (Array.isArray(results) && results.length > 0){
                     const pickedAddress = results[0]
+                    console.log('pickedAddress_userAction: ', pickedAddress)
                     dispatch({
                         type: 'ON_FETCH_LOCATION',
                         payload: pickedAddress
@@ -137,6 +139,8 @@ export const onFetchLocation = (lat: number, lng: number) => {
     }
 
 }
+
+
 
 
 

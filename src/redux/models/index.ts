@@ -41,6 +41,8 @@ export interface Restaurant{
     _id: string;
     name: string;
     foodType: string;
+    lat: number,
+    lng: number,
     address: string;
     phone: string;
     images: string;
@@ -78,7 +80,8 @@ export interface UserState{
 export interface ShoppingState{
     availability: FoodAvailability,
     availableFoods: [FoodModel]
-    offers: [OfferModel]
+    offers: [OfferModel],
+    restaurantRoutes: [FetchRoute],
     //other models
 }
 
@@ -141,4 +144,53 @@ export interface PickedAddress{
     ],
     formatted_address: string,
     place_id: string
+}
+
+export interface LatLng{
+    lat: number,
+    lng: number
+}
+
+export interface TextValue{
+    text: string,
+    value: number
+}
+export interface FetchRoute{
+    bounds: {
+        northeast: LatLng,
+        southwest: LatLng
+    },
+    legs: [
+        {
+            distance: TextValue,
+            duration: TextValue,
+            end_address : string,
+            end_location : LatLng,
+            start_address : string,
+            start_location : LatLng,
+            steps : [
+                {
+                   distance : TextValue,
+                   duration : TextValue,
+                   end_location : TextValue,
+                   html_instructions : string,
+                   polyline : {
+                      points : string
+                   },
+                   start_location : LatLng
+                   travel_mode : string
+                },
+            ]
+            traffic_speed_entry : [any],
+            via_waypoint : [any]
+        }
+    ],
+    totalDistance?: number,
+    totalDuration?: number,
+    idRestaurant?: string,
+}
+
+export interface FetchDirectionResponse{
+    routes: [FetchRoute],
+    status: string
 }

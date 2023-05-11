@@ -1,13 +1,12 @@
 import axios from 'axios'
-import { Address } from 'expo-location'
+// import { Address } from 'expo-location'
 import { Dispatch } from 'react'
-import { BASE_URL } from '../../utils'
-import { Category, FoodAvailability, FoodModel, OfferModel, Restaurant } from '../models'
+import { BASE_URL, MAP_API_KEY } from '../../utils'
+import { Category, FetchDirectionResponse, FetchRoute, FoodAvailability, FoodModel, OfferModel, Restaurant } from '../models'
 import { onGetAvailability, onGetAvailableFoods } from '../../../backend/controllers'
-import { readJSON } from '../../../backend/utils'
 import { onGetOffers } from '../../../backend/controllers/offer'
 
-const POST_CODE = 400012
+const POST_CODE = '400012'
 const [LAT, LNG] = [15.975285677159741, 108.2523549954628]
 const WRONG_BASE_URL = [
     'http://localhost:8888/',
@@ -41,43 +40,23 @@ export interface ResetFoodsAction{
     readonly type: 'ON_RESET_FOODS',
     payload: FoodAvailability
 }
-
-
-export type ShoppingAction = AvailabilityAction | ShoppingErrorAction | FoodSearchAction | OfferSearchAction | ResetFoodsAction
-
-function replaceFoodsURL(foods:any){
-    
-    for (let idFood = 0; idFood < foods.length; idFood++){
-        for (let idImage = 0; idImage < foods[idFood].images.length; idImage++ ){
-            const oldValue = foods[idFood].images[idImage];
-            let newValue = oldValue.replace(WRONG_BASE_URL[0], BASE_URL);
-            newValue = newValue.replace(WRONG_BASE_URL[1], BASE_URL);
-            foods[idFood].images[idImage] = newValue
-        }
-    }
+export interface FetchDirectionAction{
+    readonly type: 'ON_FETCH_DIRECTION',
+    payload: FetchRoute
+}
+export interface FetchDirectionsAction{
+    readonly type: 'ON_FETCH_DIRECTIONS',
+    payload: [FetchRoute]
 }
 
-function replaceCategoriesURL(categories: any){
-    for (let idCate = 0; idCate < categories.length; idCate++){
-        const oldValue = categories[idCate].icon;
-        let newValue = oldValue.replace(WRONG_BASE_URL[0], BASE_URL);
-        newValue = newValue.replace(WRONG_BASE_URL[1], BASE_URL);
-        categories[idCate].icon = newValue
-    }
-}
 
-function replaceRestaurantsURL(restaurants: any){
-    replaceFoodsURL(restaurants);   // because Restaurant has same property images with Food
-    for (let idRest = 0; idRest < restaurants.length; idRest++){
-        replaceFoodsURL(restaurants[idRest].foods)
-    }
-}
-
-function replaceFoodAvailabilityURL(data: any){
-    replaceCategoriesURL(data.categories);
-    replaceFoodsURL(data.foods);
-    replaceRestaurantsURL(data.restaurants);
-}
+export type ShoppingAction = AvailabilityAction | 
+    ShoppingErrorAction | 
+    FoodSearchAction | 
+    OfferSearchAction | 
+    ResetFoodsAction | 
+    FetchDirectionAction |
+    FetchDirectionsAction
 //Trigger actions from components
 export const onAvailability = (postCode: string) => {
 
@@ -87,7 +66,7 @@ export const onAvailability = (postCode: string) => {
 
             // const response = await axios.get<FoodAvailability>(`${BASE_URL}food/availability/${POST_CODE}`)
             const response = await onGetAvailability(LAT, LNG)
-            let {categories, restaurants, foods} = response.body.data
+            let {categories, restaurants, foods, restaurantsRoute} = response.body.data
             const newFoods = foods.map(food=>{
                 return {
                     ...food,
@@ -113,6 +92,15 @@ export const onAvailability = (postCode: string) => {
                         restaurants: restaurants as [Restaurant]
                     }
                 })
+                dispatch({
+                    type: 'ON_FETCH_DIRECTIONS',
+                    payload: restaurantsRoute as [FetchRoute]
+                })
+                dispatch({
+                    type: 'ON_FOODS_SEARCH',
+                    payload: newFoods,
+                })
+                
             }
 
 
@@ -139,17 +127,19 @@ export const onSearchFoods = (postCode: string) => {
         try {
 
             // const response = await axios.get<[FoodModel]>(`${BASE_URL}food/search/${POST_CODE}`)
-            const response = await onGetAvailableFoods(LAT, LNG)
+            // replaceFoodsURL(response.data)
 
-            const newFoods = response.body.data.map(food=>{
-                return {
-                    ...food,
-                    unit: 0
-                }
-            }) as [any]
+            // const response = await onGetAvailableFoods(LAT, LNG)
+
+            // const newFoods = response.body.data.map(food=>{
+            //     return {
+            //         ...food,
+            //         unit: 0
+            //     }
+            // }) as [any]
 
             // console.log(response)
-            // replaceFoodsURL(response.data)
+            const response = true
 
             if(!response){
                 dispatch({
@@ -160,7 +150,7 @@ export const onSearchFoods = (postCode: string) => {
                 // save our location in local storage
                 dispatch({
                     type: 'ON_FOODS_SEARCH',
-                    payload: newFoods
+                    payload: {} as [FoodModel]
                 })
             }
 
@@ -228,6 +218,60 @@ export const onResetFoods = (availability: FoodAvailability)=>{
             type: 'ON_RESET_FOODS',
             payload: availability
         })
+    }
+
+}
+
+export const onFetchDirection = (restaurant: Restaurant, latDest: number, lngDest: number) => {
+ 
+    return async ( dispatch: Dispatch<ShoppingAction>) => {
+
+        try {
+            const response = await axios.get<FetchDirectionResponse>(`https://maps.google.com/maps/api/directions/json
+                ?origin=${restaurant.lat},${restaurant.lng}
+                &destination=${latDest},${lngDest}
+                &mode=driving
+                &key=${MAP_API_KEY}`
+            )
+
+            // const response = {
+            //     data: '123 Nguyen Van Linh'
+            // }
+            console.log('response: ', response)
+
+            if(!response){
+                dispatch({
+                    type: 'ON_SHOPPING_ERROR',
+                    payload: 'Direction Fetching Error'
+                })
+            }else{
+                const { routes } = response.data
+
+                if (Array.isArray(routes) && routes.length > 0){
+                    const route = routes[0]
+                    var distance= 0; // meters
+                    var duration = 0; //secs
+                    for(let idStep = 0; idStep < route.legs[0].steps.length; idStep++){
+                        distance += route.legs[0].steps[idStep].distance.value;
+                        duration += route.legs[0].steps[idStep].duration.value;
+                    } 
+                    dispatch({
+                        type: 'ON_FETCH_DIRECTION',
+                        payload: {
+                            ...route,
+                            totalDistance: distance,
+                            totalDuration: duration,
+                            idRestaurant: restaurant._id
+                        }
+                    })
+                }
+            }
+        } catch (error) {
+            dispatch({
+                type: 'ON_SHOPPING_ERROR',
+                payload: error
+            })
+        }
     }
 
 }

@@ -77,7 +77,6 @@ interface LocationProps{
 
 
     useEffect(() => {
-
         if (pickedAddress !== undefined){
             const { address_components } = pickedAddress;
             if (Array.isArray(address_components)){
@@ -156,13 +155,13 @@ interface LocationProps{
         </View>
     }
 
-    // if (isMap){
-    //     return mapView();
-    // }else{
-    //     return pickLocationView();
-    // }
+    if (isMap){
+        return mapView();
+    }else{
+        return pickLocationView();
+    }
 
-    return mapView()
+    // return mapView()
 
 }
 

@@ -1,11 +1,12 @@
 import { ShoppingAction } from '../actions'
-import { FoodAvailability, FoodModel, OfferModel, ShoppingState } from '../models'
+import { FetchRoute, FoodAvailability, FoodModel, OfferModel, ShoppingState } from '../models'
 
 
 const initialState = {
     availability: {} as FoodAvailability,
     availableFoods: {} as [FoodModel],
-    offers: {} as [OfferModel]
+    offers: {} as [OfferModel],
+    restaurantRoutes: {} as [FetchRoute]
 }
 
 
@@ -33,6 +34,32 @@ const ShoppingReducer = (state: ShoppingState = initialState, action: ShoppingAc
             return {
                 ...state,
                 availability: action.payload
+            }
+
+        case 'ON_FETCH_DIRECTION':
+            if (Array.isArray(state.restaurantRoutes) && state.restaurantRoutes.length > 0){
+                return {
+                    ...state,
+                    restaurantRoutes: state.restaurantRoutes.concat([action.payload])
+                }
+            }else{
+                return {
+                    ...state,
+                    restaurantRoutes: [action.payload]
+                }
+            }
+
+        case 'ON_FETCH_DIRECTIONS':
+            if (Array.isArray(state.restaurantRoutes) && state.restaurantRoutes.length > 0){
+                return {
+                    ...state,
+                    restaurantRoutes: state.restaurantRoutes.concat(action.payload)
+                }
+            }else{
+                return {
+                    ...state,
+                    restaurantRoutes: action.payload
+                }
             }
 
 
