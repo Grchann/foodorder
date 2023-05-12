@@ -18,7 +18,7 @@ return (<View style={styles.container}>
                 <Image style={{width: 25, height: 25 }} source={require('../images/search.png')}/>
                 <TextInput 
                     style={{  marginLeft: 5, flex: 9, display: 'flex', fontSize: 16, height: 42 }}
-                    placeholder={"Search Foods"}
+                    placeholder={"Tìm kiếm món ăn"}
                     autoFocus={autoFocus}
                     onTouchStart={didTouch}
                     onChangeText={(text) => onTextChange(text)}
