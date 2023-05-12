@@ -70,7 +70,7 @@ interface LocationProps{
 
     const onTapConfirmLocation = ()=>{
         if (selectedAddress?.postalCode !== ''){
-            onUpdateLocation(selectedAddress)
+            onUpdateLocation({...selectedAddress, latitude: region.latitude, longitude: region.longitude})
             navigate('HomePage')
         }
     }
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
         flex: 7.5,
     },
     footer: {
-        flex: 1,
+        flex: 2,
     },
     deliveryIcon:{
         width: 120,

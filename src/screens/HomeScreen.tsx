@@ -31,12 +31,12 @@ export const _HomeScreen: React.FC<HomeProps> = (props) => {
 
  
     useEffect(() => {
-        props.onAvailability(location.postalCode)
+        props.onAvailability(location.latitude, location.longitude)
         // setTimeout(() => {
             // props.onSearchFoods(location.postalCode)
         // }, 4000 )
 
-    }, [, location])
+    }, [location])
 
     const onTapCategory = (item: Category) => {
         navigate('CategoryDetailPage', { category: item })

@@ -111,7 +111,7 @@ export const onFetchLocation = (lat: number, lng: number) => {
             // const response = {
             //     data: '123 Nguyen Van Linh'
             // }
-            console.log('response: ', response)
+            // console.log('response: ', response)
 
             if(!response){
                 dispatch({
@@ -123,7 +123,7 @@ export const onFetchLocation = (lat: number, lng: number) => {
 
                 if (Array.isArray(results) && results.length > 0){
                     const pickedAddress = results[0]
-                    console.log('pickedAddress_userAction: ', pickedAddress)
+                    // console.log('pickedAddress_userAction: ', pickedAddress)
                     dispatch({
                         type: 'ON_FETCH_LOCATION',
                         payload: pickedAddress

@@ -6,8 +6,7 @@ import { Category, FetchDirectionResponse, FetchRoute, FoodAvailability, FoodMod
 import { onGetAvailability, onGetAvailableFoods } from '../../../backend/controllers'
 import { onGetOffers } from '../../../backend/controllers/offer'
 
-const POST_CODE = '400012'
-const [LAT, LNG] = [15.975285677159741, 108.2523549954628]
+// const [LAT, LNG] = [15.975285677159741, 108.2523549954628]
 const WRONG_BASE_URL = [
     'http://localhost:8888/',
     'https://online-foods.herokuapp.com/'
@@ -58,14 +57,14 @@ export type ShoppingAction = AvailabilityAction |
     FetchDirectionAction |
     FetchDirectionsAction
 //Trigger actions from components
-export const onAvailability = (postCode: string) => {
+export const onAvailability = (lat: number, lng: number) => {
 
     return async ( dispatch: Dispatch<ShoppingAction>) => {
 
         try {
 
             // const response = await axios.get<FoodAvailability>(`${BASE_URL}food/availability/${POST_CODE}`)
-            const response = await onGetAvailability(LAT, LNG)
+            const response = await onGetAvailability(lat, lng)
             let {categories, restaurants, foods, restaurantsRoute} = response.body.data
             const newFoods = foods.map(food=>{
                 return {
@@ -119,7 +118,7 @@ export const onAvailability = (postCode: string) => {
 
 
 //Trigger actions from components
-export const onSearchFoods = (postCode: string) => {
+export const onSearchFoods = (lat: number, lng: number) => {
 
 
     return async ( dispatch: Dispatch<ShoppingAction>) => {
