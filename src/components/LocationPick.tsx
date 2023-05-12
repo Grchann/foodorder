@@ -14,7 +14,7 @@ const LocationPick: React.FC<LocationPickProps> = ({ onChangeLocation }) => {
     return <View style={styles.container}>
         <GooglePlacesAutocomplete
             minLength={4}
-            placeholder='Search your Address'
+            placeholder='Tìm kiếm vị trí của bạn'
             fetchDetails={true}
             onPress={(_, details = null)=>{
                 if (details?.geometry){
