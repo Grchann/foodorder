@@ -80,7 +80,7 @@ export const _HomeScreen: React.FC<HomeProps> = (props) => {
                         keyExtractor={(item) => `${item._id}`}
                     />
                     <View>
-                        <Text style={{fontSize: 25, fontWeight: '600', color: '#f15b5d', marginLeft: 20 }} >Quán ăn gần đây </Text>
+                        <Text style={{fontSize: 25, fontWeight: '600', color: '#f15b5d', marginLeft: 20 }} >Quán ăn bán chạy </Text>
                     </View>
 
                     <FlatList 
