@@ -22,7 +22,8 @@ const transformURLRestaurants = (restaurants: [DBRestaurant])=>{
 export const onGetAvailableRestaurants = async (lat: number, lng: number)=>{
     const restaurants = (await readJSON(PATH_RESTAURANT_JSON)) as [DBRestaurant];
 
-    const firstFilterRestaurants = restaurants.filter(rest=>euclideSquare(lat, lng, rest.lat, rest.lng)<FIT_RADIUS_SQUARE) as [any]
+    // const firstFilterRestaurants = restaurants.filter(rest=>euclideSquare(lat, lng, rest.lat, rest.lng)<FIT_RADIUS_SQUARE) as [any]
+    const firstFilterRestaurants = restaurants as [any]
     const firstFilterRestaurantsDirection = (await Promise.all(firstFilterRestaurants.map(rest=>onFetchDirection(rest, lat, lng)))) as [AvailableRoute] 
     const secondFilterRestaurants = [];
     const secondFilterRestaurantsDirection = [];

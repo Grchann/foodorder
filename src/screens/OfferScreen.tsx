@@ -37,8 +37,8 @@ const _OfferScreen: React.FC<OfferScreenProps> = (props) => {
             })
         }
 
-        const taxAmount = (total / 100 * 0.9) + 40 
-        const orderAmount = taxAmount + total
+        // const taxAmount = (total / 100 * 0.9) + 40 
+        const orderAmount = total
 
         if (orderAmount >= item.minValue){
             props.onApplyOffer(item, false)
@@ -69,14 +69,14 @@ const _OfferScreen: React.FC<OfferScreenProps> = (props) => {
         return false
     }
 
-    const [isEditing, setIsEditing] = useState(false)
-    const [keyword, setKeyword] = useState('')
+    // const [isEditing, setIsEditing] = useState(false)
+    // const [keyword, setKeyword] = useState('')
 
-    const { availableFoods } = props.shoppingReducer;
+    // const { availableFoods } = props.shoppingReducer;
   
-    const onTapFood = (item: FoodModel) => {    
-        navigate('FoodDetailPage', { food: item})
-    }
+    // const onTapFood = (item: FoodModel) => {    
+    //     navigate('FoodDetailPage', { food: item})
+    // }
 
     return (<View style={styles.container}>
         <View style={styles.navigation}> 
@@ -103,6 +103,8 @@ const _OfferScreen: React.FC<OfferScreenProps> = (props) => {
                     isApplied={checkIfExist(item)}/> }
                 keyExtractor={(item) => `${item._id}`}
             />}
+
+            
             
 
         </View>
