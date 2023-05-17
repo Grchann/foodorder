@@ -1,5 +1,5 @@
 
-import React, { useState, useReducer, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, Dimensions , Image, Alert } from 'react-native'
 
 import * as Location from 'expo-location'
@@ -10,12 +10,7 @@ import { onUpdateLocation, UserState, ApplicationState } from '../redux'
 
 
 import { useNavigation } from '../utils'
-import { readJSON } from '../../backend/utils'
 import { initAsyncStorage } from '../../backend'
-import { PATH_FOOD_JSON } from '../../backend/const'
-
-
-import BcryptReactNative from "bcrypt-react-native"
 
 const screenWidth = Dimensions.get('screen').width
 
@@ -29,12 +24,12 @@ interface LandingProps{
 
 const _LandingScreen: React.FC<LandingProps> = (props) => {
 
-    const { userReducer, onUpdateLocation }  = props;
+    const { onUpdateLocation }  = props;
 
     const { navigate } = useNavigation()
 
-    const [errorMsg, setErrorMsg] = useState("")
-    const [address, setAddress] = useState<Location.Address>()
+    // const [errorMsg, setErrorMsg] = useState("")
+    // const [address, setAddress] = useState<Location.Address>()
     
     const [displayAddress, setDisplayAddress] = useState("Đang tìm kiếm")
 
@@ -71,7 +66,7 @@ const _LandingScreen: React.FC<LandingProps> = (props) => {
                 let addressResponse: any = await Location.reverseGeocodeAsync({ latitude, longitude})
 
                 for(let item of addressResponse){
-                    setAddress(item)
+                    // setAddress(item)
                     let currentAddress = `${item.name} ${item.street}, ${item.city}, ${item.postalCode}`
                     onUpdateLocation({...item, latitude: latitude, longitude: longitude, displayAddress: currentAddress})
                     setDisplayAddress(currentAddress)
@@ -103,7 +98,7 @@ const _LandingScreen: React.FC<LandingProps> = (props) => {
 
             if (locationData !== null){
                 const savedAddress = JSON.parse(locationData);
-                props.onUpdateLocation(savedAddress);
+                onUpdateLocation(savedAddress);
                 setTimeout(()=>{
                     navigate('homeStack')
                 }, 500)
@@ -117,13 +112,15 @@ const _LandingScreen: React.FC<LandingProps> = (props) => {
 
     useEffect(() => {
         AsyncStorage.clear()
-        initAsyncStorage().then(async ()=>{
-            // console.log(await BcryptReactNative.getSalt(10))
-        }
-        )
+        initAsyncStorage()
         
         checkExistingLocation()
     }, [])
+
+    // [] do lan render dau tien
+    // [userReducer.location] do
+    // 1. lan render dau tien
+    // 2. khi bien user...location thay doi. location.street thay doi.
 
      
     return (

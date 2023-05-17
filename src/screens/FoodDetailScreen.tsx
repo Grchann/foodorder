@@ -56,7 +56,7 @@ return (<View style={styles.container}>
                 <Text>{food.description} </Text>
             </View> 
             <View style={{ height: 120,}}>
-                    <FoodCard item={checkExistence(food, Cart)} onTap={() => {}} onUpdateCart={props.onUpdateCart} />
+                <FoodCard item={checkExistence(food, Cart)} onTap={() => {}} onUpdateCart={props.onUpdateCart} />
              </View>
 
         </View>

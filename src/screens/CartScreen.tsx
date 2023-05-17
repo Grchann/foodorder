@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, TextInput, Image, Dimensions,
 import { connect } from 'react-redux'
 import { ApplicationState, FoodModel, ShoppingState, onUpdateCart, onCreateOrder, onApplyOffer, onClearCart, onResetFoods, UserState } from '../redux'
 
-import { ButtonWithIcon, FoodCard, FoodCardInfo, SearchBar, ButtonWithTitle } from '../components'
+import { FoodCardInfo, ButtonWithTitle } from '../components'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 
 import PaymentTypePopup from 'react-native-raw-bottom-sheet'
@@ -26,17 +26,17 @@ const _CartScreen: React.FC<CartScreenProps> = (props) => {
     const { navigate } = useNavigation()
  
     const [totalAmount, setTotalAmount] = useState(0);
-    const [totalTax, setTotalTax] = useState(0);
+    // const [totalTax, setTotalTax] = useState(0);
     const [payableAmount, setPayableAmount] = useState(0);
     const [discount, setDiscount] = useState(0);
  
-    const { Cart, user, location, orders, appliedOffer } = props.userReducer;
+    const { Cart, user, location, appliedOffer } = props.userReducer;
 
     const popupRef = createRef<PaymentTypePopup>();
 
-    const onTapFood = (item: FoodModel)=>{
-        navigate('FoodDetaiPage', {food: item})
-    }
+    // const onTapFood = (item: FoodModel)=>{
+    //     navigate('FoodDetaiPage', {food: item})
+    // }
 
     useEffect(() => {
         onCalculateAmount()
@@ -53,10 +53,10 @@ const _CartScreen: React.FC<CartScreenProps> = (props) => {
             })
         }
 
-        const tax = (total / 100 * 0.9) + 40;
+        // const tax = (total / 100 * 0.9) + 40;
 
         if (total > 0){
-            setTotalTax(tax)
+            // setTotalTax(tax)
         }
         
         setTotalAmount(total);
