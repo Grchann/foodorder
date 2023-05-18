@@ -56,7 +56,7 @@ const _LandingScreen: React.FC<LandingProps> = (props) => {
             let { status } = await Location.requestPermissionsAsync();
 
             if (status !== 'granted'){
-                showAlert('Location Permission Needed', 'Location Permission needed to access your nearest restaurants!')
+                showAlert('Cần cấp quyền truy cập vị trí', 'Quyền vị trí cần thiết để truy cập vào nhà hàng gần nhất của bạn!')
                 return;
             }
 
@@ -88,11 +88,11 @@ const _LandingScreen: React.FC<LandingProps> = (props) => {
 
 
             }else{
-                showAlert('Location Not Found', 'Location not found. Please enter your location to get access of nearest restaurant')
+                showAlert('Không tìm thấy vị trí', 'Không tìm thấy vị trí. Vui lòng nhập vị trí của bạn để có quyền truy cập vào nhà hàng gần nhất')
 
             }
         } catch (error) {
-            showAlert('Location Permission Needed', 'Location Permission needed to access your nearest restaurants!')
+            showAlert('Cần cấp quyền truy cập vị trí', 'Quyền vị trí cần thiết để truy cập vào nhà hàng gần nhất của bạn!')
         }
     }
 
