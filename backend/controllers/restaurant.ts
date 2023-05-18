@@ -6,7 +6,7 @@ import { DBRestaurant } from "../models/restaurant";
 import { readJSON } from "../utils";
 
 const FIT_RADIUS_SQUARE = 0.0003
-const THRESHOLD_DISTANCE = 1200
+const THRESHOLD_DISTANCE = 3000
 const euclideSquare = (xA: number, yA: number, xB: number, yB: number)=>{
     return ((xA - xB) ** 2) + ((yA - yB) ** 2)
 }
